@@ -4,14 +4,11 @@ public class FpsMovement : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] float speed;
-    [SerializeField] float walkDrag;
-    [SerializeField] float sprintDrag;
+    [SerializeField] Vector3 drag;
     [SerializeField] Transform orientation;
     Rigidbody rb;
-    Vector3 moveDir;
     float inputX;
     float inputZ;
-    float drag;
 
     [Header("Jumping")]
     [SerializeField] float jumpForce;
@@ -26,23 +23,12 @@ public class FpsMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        drag = walkDrag;
     }
 
     void Update()
     {
         inputZ = Input.GetAxisRaw("Horizontal");
         inputX = Input.GetAxisRaw("Vertical");
-
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            drag = sprintDrag;
-        }
-        else
-        {
-            drag = walkDrag;
-        }
-        rb.drag = drag;
 
         if (Input.GetKey(KeyCode.Space) && Grounded())
         {
@@ -52,15 +38,17 @@ public class FpsMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        moveDir = (orientation.forward * inputX + orientation.right * inputZ).normalized;
+        Vector3 moveDir = (orientation.forward * inputX + orientation.right * inputZ).normalized;
+        Vector3 force = new Vector3(moveDir.x, 0, moveDir.z) * speed;
+        Vector3 draggedForce = new Vector3(force.x / (drag.x + 1), 0, force.z / (drag.z + 1));
         if (Grounded())
         {
-            rb.AddForce(moveDir * speed, ForceMode.Force);
+            rb.AddForce(draggedForce, ForceMode.Force);
         }
         else
         {
-            rb.AddForce(moveDir * speed * airMultiplier, ForceMode.Force);
-        }
+            rb.AddForce(draggedForce * airMultiplier, ForceMode.Force);
+        }    
 
         Vector3 flatVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
         if (flatVelocity.magnitude > speed)
@@ -69,12 +57,12 @@ public class FpsMovement : MonoBehaviour
             rb.velocity = new Vector3(limitedVelocity.x, rb.velocity.y, limitedVelocity.z);
         }
 
-
         if (jumpPressed)
         {
             rb.velocity = new Vector3 (rb.velocity.x, jumpForce, rb.velocity.z);
             jumpPressed = false;
         }
+        Debug.Log(rb.velocity);
     }
 
     bool Grounded()
