@@ -8,6 +8,7 @@ public class FpsMovement : MonoBehaviour
     [SerializeField] float walkAcceleration;
     [SerializeField] float maxWalkSpeed;
     [SerializeField] Transform orientation;
+    Vector3 moveDir;
     float inputX;
     float inputZ;
     float acceleration;
@@ -28,8 +29,14 @@ public class FpsMovement : MonoBehaviour
     float startHeight;
 
     [Header("Ground Check")]
-    [SerializeField] float height;
     [SerializeField] LayerMask ground;
+    [SerializeField] CapsuleCollider col;
+    float height;
+
+    [Header("Slope Check")]
+    [SerializeField] float maxSlopeAngle;
+    RaycastHit slopeHit;
+    bool exitingSlope;
 
     [Header("KeyBinds")]
     [SerializeField] KeyCode jumpKey;
@@ -41,20 +48,26 @@ public class FpsMovement : MonoBehaviour
     enum States { walking, sprinting, air, crouching }
 
     Rigidbody rb;
+    ConstantForce cf;
+    float originalGravity;
 
     #endregion
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        cf = GetComponent<ConstantForce>();
         rb.freezeRotation = true;
+        acceleration = walkAcceleration;
+        maxSpeed = maxWalkSpeed;
         startHeight = transform.localScale.y;
+        height = col.height;
+        originalGravity = cf.force.y;
     }
 
     void Update()
     {
         PlayerInput();
-        StateManager();
     }
 
     void FixedUpdate()
@@ -81,46 +94,75 @@ public class FpsMovement : MonoBehaviour
             jumpPressed = true;
         }
 
-        // Sprint Input
-        if (Input.GetKey(sprintKey))
+        // Sprinting Input
+        if (Input.GetKeyDown(sprintKey))
         {
             acceleration = sprintAcceleration;
             maxSpeed = maxSprintSpeed;
+            state = States.sprinting;
         }
         else
+        if (Input.GetKeyUp(sprintKey))
         {
             acceleration = walkAcceleration;
             maxSpeed = maxWalkSpeed;
+            state = States.walking;
         }
 
         // Crouch Input
-        if (Input.GetKey(crouchKey))
+        if (Input.GetKeyDown(crouchKey))
         {
+            transform.localScale = new Vector3(transform.localScale.x, crouchHeight, transform.localScale.z);
+            rb.AddForce(Vector3.down * 10, ForceMode.Impulse);
             acceleration = crouchAcceleration;
             maxSpeed = maxCrouchSpeed;
+            state = States.crouching;
         }
         else
+        if (Input.GetKeyUp(crouchKey))
         {
+            transform.localScale = new Vector3(transform.localScale.x, startHeight, transform.localScale.z);
             acceleration = walkAcceleration;
             maxSpeed = maxWalkSpeed;
+            state = States.walking;
         }
     }
 
     void MovePlayer()
     {
-        Vector3 moveDir = (orientation.forward * inputX + orientation.right * inputZ).normalized;
+        moveDir = (orientation.forward * inputX + orientation.right * inputZ).normalized;
         moveDir.y = 0;
+
+        if (OnSlope() && !exitingSlope)
+        {
+            rb.AddForce(GetSlopeMoveDirection() * acceleration, ForceMode.Force);
+        }
+
         rb.AddForce(moveDir * acceleration, ForceMode.Force);
+        
+        if (Grounded())
+        {
+            state = States.air;
+        }
     }
 
     void SpeedLimit()
     {
-        Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-        if (flatVel.magnitude > maxSpeed)
+        if (OnSlope() && !exitingSlope)
         {
-            Vector3 limitedVel = flatVel.normalized * maxSpeed;
-            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            if (rb.velocity.magnitude > maxSpeed)
+            {
+                rb.velocity = rb.velocity.normalized * maxSpeed;
+            }
+        }
+        else
+        {
+            Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            if (flatVel.magnitude > maxSpeed)
+            {
+                Vector3 limitedVel = flatVel.normalized * maxSpeed;
+                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            }
         }
     }
 
@@ -129,31 +171,26 @@ public class FpsMovement : MonoBehaviour
         if (jumpPressed)
         {
             rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
+            exitingSlope = true;
             jumpPressed = false;
         }
     }
 
-    void StateManager()
+    bool OnSlope()
     {
-        if (Grounded())
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, height * 0.5f + 0.3f))
         {
-            if (Input.GetKey(sprintKey))
-            {
-                state = States.sprinting;
-            }
-            else
-            if (Input.GetKey(crouchKey))
-            {
-                state = States.crouching;
-            }
-            else
-            {
-                state = States.walking;
-            }
+            float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            return angle < maxSlopeAngle && angle != 0;
         }
         else
         {
-            state = States.crouching;
+            return false;
         }
+    }
+
+    Vector3 GetSlopeMoveDirection()
+    {
+        return Vector3.ProjectOnPlane(moveDir, slopeHit.normal).normalized;
     }
 }
