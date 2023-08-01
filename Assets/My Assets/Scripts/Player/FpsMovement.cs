@@ -43,10 +43,6 @@ public class FpsMovement : MonoBehaviour
     [SerializeField] KeyCode sprintKey;
     [SerializeField] KeyCode crouchKey;
 
-    [Header("Movement State")]
-    [SerializeField] States state;
-    enum States { walking, sprinting, air, crouching }
-
     Rigidbody rb;
     ConstantForce cf;
     float originalGravity;
@@ -99,14 +95,12 @@ public class FpsMovement : MonoBehaviour
         {
             acceleration = sprintAcceleration;
             maxSpeed = maxSprintSpeed;
-            state = States.sprinting;
         }
         else
         if (Input.GetKeyUp(sprintKey))
         {
             acceleration = walkAcceleration;
             maxSpeed = maxWalkSpeed;
-            state = States.walking;
         }
 
         // Crouch Input
@@ -116,7 +110,6 @@ public class FpsMovement : MonoBehaviour
             rb.AddForce(Vector3.down * 10, ForceMode.Impulse);
             acceleration = crouchAcceleration;
             maxSpeed = maxCrouchSpeed;
-            state = States.crouching;
         }
         else
         if (Input.GetKeyUp(crouchKey))
@@ -124,7 +117,6 @@ public class FpsMovement : MonoBehaviour
             transform.localScale = new Vector3(transform.localScale.x, startHeight, transform.localScale.z);
             acceleration = walkAcceleration;
             maxSpeed = maxWalkSpeed;
-            state = States.walking;
         }
     }
 
@@ -139,11 +131,6 @@ public class FpsMovement : MonoBehaviour
         }
 
         rb.AddForce(moveDir * acceleration, ForceMode.Force);
-        
-        if (Grounded())
-        {
-            state = States.air;
-        }
     }
 
     void SpeedLimit()

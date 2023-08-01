@@ -10,18 +10,22 @@ public class GunSystem : MonoBehaviour
     [SerializeField] bool allowButtonHold;
     int bulletsLeft, bulletsShot;
 
-    //bools 
+    // Bools
     bool shooting, readyToShoot, reloading;
 
-    //Reference
+    [Space]
+
+    [Header("Refferences")]
     [SerializeField] Camera fpsCam;
     [SerializeField] Transform attackPoint;
     [SerializeField] RaycastHit rayHit;
     [SerializeField] LayerMask whatIsEnemy;
 
-    //Graphics
+    [Space]
+
+    [Header("Graphics")]
     [SerializeField] GameObject muzzleFlash, bulletHoleGraphic;
-    [SerializeField] CamShake camShake;
+    //[SerializeField] CamShake camShake;
     [SerializeField] float camShakeMagnitude, camShakeDuration;
     [SerializeField] TextMeshProUGUI text;
 
@@ -41,13 +45,23 @@ public class GunSystem : MonoBehaviour
 
     void MyInput()
     {
-        if (allowButtonHold) shooting = Input.GetKey(KeyCode.Mouse0);
-        else shooting = Input.GetKeyDown(KeyCode.Mouse0);
+        if (allowButtonHold)
+        {
+            shooting = Input.GetKey(KeyCode.Mouse0);
+        }
+        else
+        {
+            shooting = Input.GetKeyDown(KeyCode.Mouse0);
+        }
 
-        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) Reload();
+        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading)
+        {
+            Reload();
+        }
 
         //Shoot
-        if (readyToShoot && shooting && !reloading && bulletsLeft > 0){
+        if (readyToShoot && shooting && !reloading && bulletsLeft > 0)
+        {
             bulletsShot = bulletsPerTap;
             Shoot();
         }
@@ -70,11 +84,13 @@ public class GunSystem : MonoBehaviour
             Debug.Log(rayHit.collider.name);
 
             if (rayHit.collider.CompareTag("Enemy"))
-                rayHit.collider.GetComponent<ShootingAi>().TakeDamage(damage);
+            {
+                //rayHit.collider.GetComponent<ShootingAi>().TakeDamage(damage);
+            }
         }
 
         //ShakeCamera
-        camShake.Shake(camShakeDuration, camShakeMagnitude);
+        //camShake.Shake(camShakeDuration, camShakeMagnitude);
 
         //Graphics
         Instantiate(bulletHoleGraphic, rayHit.point, Quaternion.Euler(0, 180, 0));
@@ -85,8 +101,10 @@ public class GunSystem : MonoBehaviour
 
         Invoke("ResetShot", timeBetweenShooting);
 
-        if(bulletsShot > 0 && bulletsLeft > 0)
-        Invoke("Shoot", timeBetweenShots);
+        if (bulletsShot > 0 && bulletsLeft > 0)
+        {
+            Invoke("Shoot", timeBetweenShots);
+        }
     }
 
     void ResetShot()
