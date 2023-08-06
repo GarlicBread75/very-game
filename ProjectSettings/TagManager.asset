@@ -4,9 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Ground
+  - Attack
   - Player 1
   - Player 2
-  - Ground
   layers:
   - Default
   - TransparentFX
@@ -14,12 +15,12 @@ TagManager:
   - 
   - Water
   - UI
-  - Player 1
-  - Player 2
-  - Player 1 attack
-  - Player 2
   - Ground
   - Wall
+  - Player
+  - Player attack
+  - 
+  - 
   - 
   - 
   - 

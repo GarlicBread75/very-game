@@ -3,13 +3,26 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    [SerializeField] string scene;
+    [SerializeField] string sceneName;
+    [SerializeField] float sceneLoadDelay;
+    bool canChangeScene;
 
-    void Update()
+    void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (canChangeScene)
         {
-            SceneManager.LoadScene(scene);
+            canChangeScene = false;
+            Invoke("ChangeScene", sceneLoadDelay);
         }
+    }
+
+    void ChangeScene()
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public void SetBool(bool thing)
+    {
+        canChangeScene = thing;
     }
 }
