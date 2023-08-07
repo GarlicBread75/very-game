@@ -9,13 +9,14 @@ public class Gun : MonoBehaviour
     [Header("Gun Stats")]
     [SerializeField] Transform firePoint;
     [SerializeField] GameObject bullet;
-    [SerializeField] int damage;
+    [SerializeField] float damage;
     [SerializeField] int bulletCount;
     [SerializeField] float speed, fireRate, spread;
     [SerializeField] bool automatic;
     [SerializeField] KeyCode shootKey;
     bool shootPressed, atkPressed, shooting;
     float shootCd;
+    [HideInInspector] public float fireRateModifier, damageModifier, knockbackModifier;
 
     [Space]
 
@@ -28,14 +29,20 @@ public class Gun : MonoBehaviour
 
     [Header("Slider")]
     [SerializeField] Slider slider;
-    [SerializeField] Gradient gradient;
+    public Gradient gradient1;
+    public Gradient gradient2;
     [SerializeField] Image fill;
     [SerializeField] Image background;
+    [HideInInspector] public Gradient gr;
     #endregion
 
     void Awake()
     {
         slider.maxValue = fireRate;
+        gr = gradient1;
+        fireRateModifier = 1;
+        damageModifier = 1;
+        knockbackModifier = 1;
     }
 
     void Update()
@@ -54,7 +61,7 @@ public class Gun : MonoBehaviour
             shootPressed = Input.GetKeyDown(shootKey);
         }
 
-        if (shootCd < fireRate)
+        if (shootCd < fireRate / fireRateModifier)
         {
             return;
         }
@@ -73,10 +80,10 @@ public class Gun : MonoBehaviour
         }
 
         slider.value = shootCd;
-        fill.color = gradient.Evaluate(slider.normalizedValue);
+        fill.color = gr.Evaluate(slider.normalizedValue);
         background.color = new Color(fill.color.r / 5, fill.color.g / 5, fill.color.b / 5);
 
-        if (shootCd < fireRate)
+        if (shootCd < fireRate / fireRateModifier)
         {
             shootCd += Time.fixedDeltaTime;
         }
@@ -95,8 +102,8 @@ public class Gun : MonoBehaviour
         {
             GameObject shotBullet = Instantiate(bullet, firePoint.position, firePoint.rotation);
             Rigidbody bulletRb = shotBullet.GetComponent<Rigidbody>();
-            shotBullet.GetComponent<Bullet>().damage = damage;
-            shotBullet.GetComponent<Bullet>().knockback = bulletKnockback;
+            shotBullet.GetComponent<Bullet>().damage = damage * damageModifier;
+            shotBullet.GetComponent<Bullet>().knockback = bulletKnockback * knockbackModifier;
             Vector2 dir = transform.rotation * Vector2.right;
             Vector2 pDir = Vector2.Perpendicular(dir) * Random.Range(-spread, spread);
             bulletRb.velocity = (dir + pDir) * speed;

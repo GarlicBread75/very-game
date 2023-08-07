@@ -4,10 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Ground
   - Attack
   - Player 1
   - Player 2
+  - Pickup
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Wall
   - Player
   - Player attack
-  - 
+  - Pickup
   - 
   - 
   - 

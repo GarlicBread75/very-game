@@ -2,16 +2,11 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [HideInInspector] public int damage;
+    [HideInInspector] public float damage;
     [SerializeField] LayerMask targetLayer;
     [SerializeField] string targetTag;
     [HideInInspector] public float knockback;
     Health hp;
-
-    private void Awake()
-    {
-        Destroy(gameObject, 10);
-    }
 
     void OnTriggerEnter(Collider collision)
     {
@@ -20,6 +15,11 @@ public class Bullet : MonoBehaviour
             hp = collision.GetComponent<Health>();
             hp.TakeDmg(damage);
             hp.hit = true;
+            collision.GetComponent<Rigidbody>().AddForce(transform.right * knockback, ForceMode.Impulse);
+        }
+        else
+        if (collision.gameObject.CompareTag("Pickup"))
+        {
             collision.GetComponent<Rigidbody>().AddForce(transform.right * knockback, ForceMode.Impulse);
         }
         Destroy(gameObject);

@@ -7,8 +7,8 @@ public class Health : MonoBehaviour
 {
     #region Variables
     [Header("Health")]
-    [SerializeField] int maxHp;
-    [SerializeField] int currentHp;
+    [SerializeField] float maxHp;
+    [SerializeField] float currentHp;
     [SerializeField] GameObject[] deathEffects;
     [SerializeField] Slider hpSlider;
     [SerializeField] Gradient gradient;
@@ -16,14 +16,17 @@ public class Health : MonoBehaviour
     [SerializeField] Image background;
     [SerializeField] Material deadMaterial;
     [SerializeField] UnityEvent onDeath;
-    [SerializeField] float hurtEyesDelay;
+    [SerializeField] float hitBlinkDelay;
     [SerializeField] GameObject[] eyes;
     [SerializeField] float minBlinkTime, maxBlinkTime, minBlinkCooldown, maxBlinkCooldown;
     float blinkCd;
+    float hitBlinkCd;
+    bool blinking, hitBlinking;
 
-    MeshRenderer rend;
     [HideInInspector] public bool dead;
+    [HideInInspector] public bool victory;
     [HideInInspector] public bool hit;
+    MeshRenderer rend;
 
     [Space]
 
@@ -43,24 +46,23 @@ public class Health : MonoBehaviour
     void Awake()
     {
         blinkCd = Random.Range(minBlinkCooldown, maxBlinkCooldown);
+        hitBlinkCd = hitBlinkDelay;
     }
 
     void FixedUpdate()
     {
-        if (dead)
-        {
-            foreach (GameObject eye in eyes)
-            {
-                if (eye.activeInHierarchy)
-                {
-                    eye.SetActive(false);
-                }
-            }
 
-            if (!eyes[1].activeInHierarchy)
-            {
-                eyes[1].SetActive(true);
-            }
+        hpSlider.value = currentHp;
+        fill.color = gradient.Evaluate(hpSlider.normalizedValue);
+        background.color = new Color(fill.color.r / 5, fill.color.g / 5, fill.color.b / 5);
+
+        if (currentHp > maxHp)
+        {
+            currentHp = maxHp;
+        }
+
+        if (dead || victory)
+        {
             return;
         }
 
@@ -71,18 +73,23 @@ public class Health : MonoBehaviour
         else
         {
             blinkCd = Random.Range(minBlinkCooldown, maxBlinkCooldown);
-            StartCoroutine(Blink());
+            if (!hitBlinking)
+            {
+                StartCoroutine(Blink());
+            }
         }
 
-        hpSlider.value = currentHp;
-        fill.color = gradient.Evaluate(hpSlider.normalizedValue);
-        background.color = new Color(fill.color.r / 5, fill.color.g / 5, fill.color.b / 5);
-
-
-
-        if (currentHp > maxHp)
+        if (hitBlinkCd > 0)
         {
-            currentHp = maxHp;
+            hitBlinkCd -= Time.fixedDeltaTime;
+            HitBlinkOn();
+        }
+        else
+        {
+            if (!blinking)
+            {
+                HitBlinkOff();
+            }
         }
 
         if (currentHp <= 0 && !dead)
@@ -92,32 +99,30 @@ public class Health : MonoBehaviour
 
         if (hit && !dead)
         {
-            eyes[0].SetActive(false);
-            eyes[2].SetActive(true);
-            Invoke("HitEyes", hurtEyesDelay);
             hit = false;
+            hitBlinkCd = hitBlinkDelay;
         }
     }
 
     #region Health Methods
 
-    public void TakeDmg(int dmg)
+    public void TakeDmg(float dmg)
     {
         currentHp -= dmg;
     }
 
-    public void HealHp(int heal)
+    public void Heal(float heal)
     {
         currentHp += heal;
     }
 
-    public void RaiseMaxHp(int increase)
+    public void RaiseMaxHp(float increase)
     {
         maxHp += increase;
         currentHp += increase;
     }
 
-    public void LowerMaxHp(int decrease)
+    public void LowerMaxHp(float decrease)
     {
         maxHp -= decrease;
         currentHp -= decrease;
@@ -131,22 +136,62 @@ public class Health : MonoBehaviour
         Destroy(effect, 3f);
         rend.material = deadMaterial;
         onDeath.Invoke();
+        Invoke("DeadEyes", 0.1f);
+        Invoke("DeadEyes", 0.15f);
+        Invoke("DeadEyes", 0.2f);
         dead = true;
     }
 
-    void HitEyes()
+    void DeadEyes()
     {
-        eyes[0].SetActive(true);
+        eyes[0].SetActive(false);
+        eyes[1].SetActive(true);
         eyes[2].SetActive(false);
+        eyes[3].SetActive(false);
+    }
+
+    void HitBlinkOn()
+    {
+        hitBlinking = true;
+        if (eyes[0].activeInHierarchy)
+        {
+            eyes[0].SetActive(false);
+        }
+
+        if (!eyes[2].activeInHierarchy)
+        {
+            eyes[2].SetActive(true);
+        }
+    }
+
+    void HitBlinkOff()
+    {
+        if (!eyes[0].activeInHierarchy)
+        {
+            eyes[0].SetActive(true);
+        }
+
+        if (eyes[2].activeInHierarchy)
+        {
+            eyes[2].SetActive(false);
+        }
+        hitBlinking = false;
+    }
+
+    public void Victory()
+    {
+        victory = true;
     }
 
     IEnumerator Blink()
     {
         if (eyes[0].activeInHierarchy)
         {
+            blinking = true;
             eyes[0].transform.localScale = new Vector3(1, 0.25f, 1);
             yield return new WaitForSeconds(Random.Range(minBlinkTime, maxBlinkTime));
             eyes[0].transform.localScale = Vector3.one;
+            blinking = false;
         }
     }
 }

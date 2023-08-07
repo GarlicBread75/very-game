@@ -1,4 +1,3 @@
-//using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -7,40 +6,34 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] float acceleration;
-    [SerializeField] float maxSpeed;
     Rigidbody rb;
     Health hp;
     Vector3 moveDir;
-    float inputX;
-    float inputY;
+    float inputX, inputY;
 
     [Space]
 
     [Header("Jumping")]
     [SerializeField] float jumpForce;
-    bool canJump;
-    bool jumpPressed;
+    bool canJump, jumpPressed;
 
     [Space]
 
-    /*[Header("Dashing")]
-    [SerializeField] Vector3 power;
-    [SerializeField] float duration;
-    [SerializeField] float cooldown;
-    TrailRenderer tr;
+    [Header("Dashing")]
+    [SerializeField] float dashPower;
+    [SerializeField] float dashCooldown;
     Vector3 dashDir;
     bool dashPressed;
-    bool dashing;
-    float cd;
-    
-    [Space]*/
+    float dashCd;
+
+    [Space]
 
     [Header("KeyBinds")]
     [SerializeField] KeyCode up;
     [SerializeField] KeyCode down;
     [SerializeField] KeyCode left;
     [SerializeField] KeyCode right;
-    //[SerializeField] KeyCode dashKey;
+    [SerializeField] KeyCode dashKey;
 
     [Space]
 
@@ -49,14 +42,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float rotSpeed;
     int rot;
 
+    [HideInInspector] public float speedModifier, jumpModifier, dashPowerModifier;
+
     #endregion
 
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
         hp = GetComponent<Health>();
-        //tr = GetComponent<TrailRenderer>();
-        //cd = cooldown;
+        dashCd = dashCooldown;
+        speedModifier = 1;
+        jumpModifier = 1;
+        dashPowerModifier = 1;
     }
 
     void Update()
@@ -65,9 +62,47 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        PlayerInput();
+
+        if (Input.GetKey(up))
+        {
+            inputY = 1;
+        }
+        else
+        if (Input.GetKey(down))
+        {
+            inputY = -1;
+        }
+        else
+        {
+            inputY = 0;
+        }
+
+        if (Input.GetKey(right))
+        {
+            inputX = 1;
+        }
+        else
+        if (Input.GetKey(left))
+        {
+            inputX = -1;
+        }
+        else
+        {
+            inputX = 0;
+        }
+
+        if (Input.GetKey(up) && canJump)
+        {
+            jumpPressed = true;
+        }
+
+        if (Input.GetKeyDown(dashKey) && dashCd <= 0 && dashDir != Vector3.zero)
+        {
+            dashPressed = true;
+        }
+
         moveDir = new Vector3(inputX, 0, 0).normalized;
-        //dashDir = new Vector3(inputX, inputY, 0);
+        dashDir = new Vector3(inputX, inputY, 0).normalized;
     }
 
     void FixedUpdate()
@@ -76,25 +111,27 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        /*if (cd > 0)
-        {
-            cd -= Time.fixedDeltaTime;
-        }*/
 
-        rb.AddForce(moveDir * acceleration, ForceMode.Force);
+        if (dashCd > 0)
+        {
+            dashCd -= Time.fixedDeltaTime;
+        }
+
+        rb.AddForce(moveDir * acceleration * speedModifier, ForceMode.Force);
 
         if (jumpPressed)
         {
             jumpPressed = false;
-            rb.velocity = new Vector3(rb.velocity.x, jumpForce, 0);
+            rb.velocity = new Vector3(rb.velocity.x, jumpForce * jumpModifier, 0);
             canJump = false;
         }
 
-        /*if (dashPressed)
+        if (dashPressed)
         {
             dashPressed = false;
-            StartCoroutine(Dashing());
-        }*/
+            rb.AddForce(dashDir * dashPower * dashPowerModifier, ForceMode.Impulse);
+            dashCd = dashCooldown;
+        }
 
         if (inputX == 1)
         {
@@ -156,11 +193,10 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
             canJump = true;
-            //cd = 0;
-        }    
+        }
     }
 
     void OnCollisionExit(Collision collision)
@@ -170,56 +206,4 @@ public class PlayerMovement : MonoBehaviour
             canJump = false;
         }
     }
-
-    void PlayerInput()
-    {
-        if (Input.GetKey(up))
-        {
-            inputY = 1;
-        }
-        else
-        if (Input.GetKey(down))
-        {
-            inputY = -1;
-        }
-        else
-        {
-            inputY = 0;
-        }
-
-        if (Input.GetKey(right))
-        {
-            inputX = 1;
-        }
-        else
-        if (Input.GetKey(left))
-        {
-            inputX = -1;
-        }
-        else
-        {
-            inputX = 0;
-        }
-
-        if (Input.GetKey(up) && canJump)
-        {
-            jumpPressed = true;
-        }
-
-        /*if (Input.GetKeyDown(dashKey) && cd <= 0 && dashDir != Vector3.zero)
-        {
-            dashPressed = true;
-        }*/
-    }
-
-    /*IEnumerator Dashing()
-    {
-        dashing = true;
-        tr.emitting = true;
-        rb.AddForce(new Vector3(dashDir.x * power.x, dashDir.y * power.y, 0), ForceMode.Impulse);
-        yield return new WaitForSeconds(duration);
-        tr.emitting = false;
-        dashing = false;
-        cd = cooldown;
-    }*/
 }
