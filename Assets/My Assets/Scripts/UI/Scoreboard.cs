@@ -6,14 +6,14 @@ public class Scoreboard : MonoBehaviour
 {
     [Header("Score")]
     [SerializeField] TextMeshProUGUI p1ScoreText;
-    [SerializeField] TextMeshProUGUI p2ScoreText, p1ScoreTextShadow, p2ScoreTextShadow;
+    [SerializeField] TextMeshProUGUI p2ScoreText, p1ScoreTextShadow, p2ScoreTextShadow, victoryText, victoryShadow1, victoryShadow2;
     [SerializeField] ScoreManager scoreManager;
     int p1Score, p2Score;
 
     [Space]
 
     [Header("Scene Load")]
-    [SerializeField] string sceneName;
+    [SerializeField] string [] sceneNames;
     [SerializeField] float sceneLoadDelay;
 
     void Awake()
@@ -36,18 +36,24 @@ public class Scoreboard : MonoBehaviour
         {
             p1Score++;
             scoreManager.p1Score = p1Score;
+            victoryShadow1.text = $"Player {playerNum} wins!";
+            victoryShadow1.gameObject.SetActive(true);
         }
         else
         if (playerNum == 2)
         {
             p2Score++;
             scoreManager.p2Score = p2Score;
+            victoryShadow2.text = $"Player {playerNum} wins!";
+            victoryShadow2.gameObject.SetActive(true);
         }
+        victoryText.text = $"Player {playerNum} wins!";
+        victoryText.gameObject.SetActive(true);
         Invoke("ChangeScene", sceneLoadDelay);
     }
 
     void ChangeScene()
     {
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(sceneNames[Random.Range(0, sceneNames.Length)]);
     }
 }

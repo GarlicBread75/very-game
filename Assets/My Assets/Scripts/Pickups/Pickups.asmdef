@@ -1,0 +1,22 @@
+{
+    "name": "Pickups",
+    "rootNamespace": "",
+    "references": [
+        "GUID:ff37f9891f28b024fbe9f9ac3edef043",
+        "GUID:be7634eb12eb04c4d8214a6f3e74aae8"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "WebGL",
+        "WindowsStandalone32",
+        "WindowsStandalone64"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

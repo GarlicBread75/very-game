@@ -9,7 +9,7 @@ public class Health : MonoBehaviour
     [Header("Health")]
     [SerializeField] float maxHp;
     [SerializeField] float currentHp;
-    [SerializeField] GameObject[] deathEffects;
+    [SerializeField] GameObject deathEffect;
     [SerializeField] Slider hpSlider;
     [SerializeField] Gradient gradient;
     [SerializeField] Image fill;
@@ -51,19 +51,47 @@ public class Health : MonoBehaviour
 
     void FixedUpdate()
     {
-
-        hpSlider.value = currentHp;
+        hpSlider.value = Mathf.Lerp(hpSlider.value, currentHp, 20 * Time.deltaTime);
         fill.color = gradient.Evaluate(hpSlider.normalizedValue);
         background.color = new Color(fill.color.r / 5, fill.color.g / 5, fill.color.b / 5);
+
+        if (dead)
+        {
+            foreach (GameObject eye in eyes)
+            {
+                if (eye == eyes[1] && !eyes[1].activeInHierarchy)
+                {
+                    eyes[1].SetActive(true);
+                }
+                else
+                if (eye != eyes[1] && eye.activeInHierarchy)
+                {
+                    eye.SetActive(false);
+                }
+            }
+            return;
+        }
+        else
+        if (victory)
+        {
+            foreach (GameObject eye in eyes)
+            {
+                if (eye == eyes[3] && !eyes[3].activeInHierarchy)
+                {
+                    eyes[3].SetActive(true);
+                }
+                else
+                if (eye != eyes[3] && eye.activeInHierarchy)
+                {
+                    eye.SetActive(false);
+                }
+            }
+            return;
+        }
 
         if (currentHp > maxHp)
         {
             currentHp = maxHp;
-        }
-
-        if (dead || victory)
-        {
-            return;
         }
 
         if (blinkCd > 0)
@@ -132,22 +160,11 @@ public class Health : MonoBehaviour
 
     void Die()
     {
-        GameObject effect = Instantiate(deathEffects[Random.Range(0, deathEffects.Length)], transform.position, Quaternion.identity);
+        GameObject effect = Instantiate(deathEffect, transform.position, Quaternion.identity);
         Destroy(effect, 3f);
         rend.material = deadMaterial;
         onDeath.Invoke();
-        Invoke("DeadEyes", 0.1f);
-        Invoke("DeadEyes", 0.15f);
-        Invoke("DeadEyes", 0.2f);
         dead = true;
-    }
-
-    void DeadEyes()
-    {
-        eyes[0].SetActive(false);
-        eyes[1].SetActive(true);
-        eyes[2].SetActive(false);
-        eyes[3].SetActive(false);
     }
 
     void HitBlinkOn()

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1826519139888521681}
   - component: {fileID: 1817368461747980345}
   - component: {fileID: -6253313479851135362}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Movement Boost
   m_TagString: Pickup
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7807260136679153726}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -162,6 +162,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedModifier: 1.5
-  jumpModifier: 1.25
-  dashPowerModifier: 2
+  jumpModifier: 1.5
+  dashPowerModifier: 1.5
   duration: 10
+  outlineMaterial: {fileID: 2100000, guid: 5d7cbac340a499b4ab257e83a554c61c, type: 2}
+  particlesOffset: {x: 0, y: -1.5, z: 0}

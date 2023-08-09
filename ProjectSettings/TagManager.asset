@@ -9,6 +9,7 @@ TagManager:
   - Player 2
   - Pickup
   - Ground
+  - Jumpable
   layers:
   - Default
   - TransparentFX
@@ -18,11 +19,11 @@ TagManager:
   - UI
   - Ground
   - Wall
-  - Player
-  - Player attack
+  - Player 1
+  - Player 2
+  - Player 1 Attack
+  - Player 2 Attack
   - Pickup
-  - 
-  - 
   - 
   - 
   - 

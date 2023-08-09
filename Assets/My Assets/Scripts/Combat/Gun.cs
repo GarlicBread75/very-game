@@ -11,8 +11,9 @@ public class Gun : MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] float damage;
     [SerializeField] int bulletCount;
-    [SerializeField] float speed, fireRate, spread;
-    [SerializeField] bool automatic;
+    [SerializeField] float minSpeed, maxSpeed, spread;
+    public float fireRate;
+    [SerializeField] bool automatic, shotgun;
     [SerializeField] KeyCode shootKey;
     bool shootPressed, atkPressed, shooting;
     float shootCd;
@@ -28,7 +29,7 @@ public class Gun : MonoBehaviour
     [Space]
 
     [Header("Slider")]
-    [SerializeField] Slider slider;
+    public Slider slider;
     public Gradient gradient1;
     public Gradient gradient2;
     [SerializeField] Image fill;
@@ -106,8 +107,8 @@ public class Gun : MonoBehaviour
             shotBullet.GetComponent<Bullet>().knockback = bulletKnockback * knockbackModifier;
             Vector2 dir = transform.rotation * Vector2.right;
             Vector2 pDir = Vector2.Perpendicular(dir) * Random.Range(-spread, spread);
-            bulletRb.velocity = (dir + pDir) * speed;
-            player.AddForce(-transform.right * knockback, ForceMode.Impulse);
+            bulletRb.velocity = (dir + pDir) * Random.Range(minSpeed, maxSpeed);
+            player.AddForce(-transform.right * knockback * (knockbackModifier / 2), ForceMode.Impulse);
         }
         shootCd = 0;
         shooting = false;

@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Dashing")]
     [SerializeField] float dashPower;
     [SerializeField] float dashCooldown;
+    [SerializeField] GameObject dashReadyOutline;
     Vector3 dashDir;
     bool dashPressed;
     float dashCd;
@@ -112,12 +113,19 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
+        rb.AddForce(moveDir * acceleration * speedModifier, ForceMode.Force);
+
         if (dashCd > 0)
         {
             dashCd -= Time.fixedDeltaTime;
         }
-
-        rb.AddForce(moveDir * acceleration * speedModifier, ForceMode.Force);
+        else
+        {
+            if (!dashReadyOutline.activeInHierarchy)
+            {
+                dashReadyOutline.SetActive(true);
+            }
+        }
 
         if (jumpPressed)
         {
@@ -129,6 +137,7 @@ public class PlayerMovement : MonoBehaviour
         if (dashPressed)
         {
             dashPressed = false;
+            dashReadyOutline.SetActive(false);
             rb.AddForce(dashDir * dashPower * dashPowerModifier, ForceMode.Impulse);
             dashCd = dashCooldown;
         }

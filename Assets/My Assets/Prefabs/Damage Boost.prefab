@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1826519139888521681}
   - component: {fileID: 1817368461747980345}
   - component: {fileID: -4751732307834278786}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Damage Boost
   m_TagString: Pickup
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7807260136679153726}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -161,5 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fdc4681c1a0cc24eada49f7a8e51a8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 5
-  damageModifier: 1.5
+  duration: 7.5
+  damageModifier: 1.25
+  outlineMaterial: {fileID: 2100000, guid: 13645f1c23624204eaf0ad78525ccea1, type: 2}
+  particlesOffset: {x: 0, y: -1.5, z: 0}

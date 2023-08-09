@@ -2,10 +2,9 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [HideInInspector] public float damage;
-    [SerializeField] LayerMask targetLayer;
     [SerializeField] string targetTag;
-    [HideInInspector] public float knockback;
+    [SerializeField] GameObject hitEffect;
+    [HideInInspector] public float damage, knockback;
     Health hp;
 
     void OnTriggerEnter(Collider collision)
@@ -22,6 +21,8 @@ public class Bullet : MonoBehaviour
         {
             collision.GetComponent<Rigidbody>().AddForce(transform.right * knockback, ForceMode.Impulse);
         }
+        GameObject effect = Instantiate(hitEffect, transform.position,Quaternion.identity);
+        Destroy(effect, 0.5f);
         Destroy(gameObject);
     }
 }

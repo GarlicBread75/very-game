@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 8210106465294909142}
   - component: {fileID: 1826519139888521681}
   - component: {fileID: 1817368461747980345}
-  - component: {fileID: 1802226978995539236}
+  - component: {fileID: 3025446943795419602}
   m_Layer: 12
-  m_Name: Heal
+  m_Name: Knockback Boost
   m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6ae85e7b0e0a8064b8bee774709a939c, type: 2}
+  - {fileID: 2100000, guid: 6e5fb118e575dbe44906a4267b2c0282, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -149,7 +149,7 @@ ConstantForce:
   m_RelativeForce: {x: 0, y: 0, z: 0}
   m_Torque: {x: 0, y: 0, z: 0}
   m_RelativeTorque: {x: 0, y: 0, z: 0}
---- !u!114 &1802226978995539236
+--- !u!114 &3025446943795419602
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,9 +158,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7807260136679153726}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5ea51c79bede3348a507a654ae4c70a, type: 3}
+  m_Script: {fileID: 11500000, guid: 085ffbe0abb95e245a2403885c88412a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healAmount: 5
-  duration: 10
+  duration: 7.5
+  knockbackModifier: 1.25
+  outlineMaterial: {fileID: 2100000, guid: d072255970fee9f4ba4ac5ce6895adf7, type: 2}
   particlesOffset: {x: 0, y: -1.5, z: 0}
