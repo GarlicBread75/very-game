@@ -200,6 +200,11 @@ public class Health : MonoBehaviour
         victory = true;
     }
 
+    public void ToggleAngry(bool thingy)
+    {
+        eyes[4].SetActive(thingy);
+    }
+
     IEnumerator Blink()
     {
         if (eyes[0].activeInHierarchy)

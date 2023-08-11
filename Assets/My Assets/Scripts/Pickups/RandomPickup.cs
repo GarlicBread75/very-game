@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RandomPickup : MonoBehaviour
 {
-    [SerializeField] GameObject[] pickups;
+    [SerializeField] GameObject pickup;
     [SerializeField] Vector3 spawnPos;
     [SerializeField] float minSpawnDelay, maxSpawnDelay;
     float cd;
@@ -21,7 +21,7 @@ public class RandomPickup : MonoBehaviour
         else
         {
             cd = Random.Range(minSpawnDelay, maxSpawnDelay);
-            Instantiate(pickups[Random.Range(0, pickups.Length)], new Vector3(Random.Range(-spawnPos.x, spawnPos.x), spawnPos.y, 0), Quaternion.Euler(new Vector3(0, 0, 90)));
+            Instantiate(pickup, new Vector3(Random.Range(-spawnPos.x, spawnPos.x), spawnPos.y, 0), Quaternion.Euler(new Vector3(0, 0, 90)));
         }
     }
 }

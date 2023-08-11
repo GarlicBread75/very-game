@@ -13,8 +13,10 @@ public class Scoreboard : MonoBehaviour
     [Space]
 
     [Header("Scene Load")]
-    [SerializeField] string [] sceneNames;
+    [SerializeField] string[] sceneNames;
     [SerializeField] float sceneLoadDelay;
+    [SerializeField] Animator anim;
+    bool changeScene;
 
     void Awake()
     {
@@ -28,6 +30,11 @@ public class Scoreboard : MonoBehaviour
         p2ScoreText.text = p2Score.ToString();
         p1ScoreTextShadow.text = p1ScoreText.text;
         p2ScoreTextShadow.text = p2ScoreText.text;
+
+        if (changeScene)
+        {
+            SceneManager.LoadScene(sceneNames[Random.Range(0, sceneNames.Length)]);
+        }
     }
 
     public void IncreaseScore(int playerNum)
@@ -54,6 +61,11 @@ public class Scoreboard : MonoBehaviour
 
     void ChangeScene()
     {
-        SceneManager.LoadScene(sceneNames[Random.Range(0, sceneNames.Length)]);
+        anim.SetBool("Round Over", true);
+    }
+
+    public void CanChangeScene()
+    {
+        changeScene = true;
     }
 }

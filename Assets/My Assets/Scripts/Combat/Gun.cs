@@ -13,11 +13,22 @@ public class Gun : MonoBehaviour
     [SerializeField] int bulletCount;
     [SerializeField] float minSpeed, maxSpeed, spread;
     public float fireRate;
-    [SerializeField] bool automatic, shotgun;
+    [SerializeField] bool automatic;
     [SerializeField] KeyCode shootKey;
     bool shootPressed, atkPressed, shooting;
     float shootCd;
-    [HideInInspector] public float fireRateModifier, damageModifier, knockbackModifier;
+    [HideInInspector] public float fireRateModifier, damageModifier, knockbackModifier, bulletKnockbackModifier;
+
+    [Space]
+
+    [Header("Muzzle Flash")]
+    [SerializeField] GameObject muzzleFlash;
+    [SerializeField] Gradient muzzleGradient;
+    [SerializeField] SpriteRenderer[] muzzleRenderers;
+    [SerializeField] Light muzzleLight;
+    [SerializeField] float minMuzzleDelay, maxMuzzleDelay;
+    [SerializeField] float muzzleScaleModifier;
+    Vector3 muzzleInitialScale;
 
     [Space]
 
@@ -44,6 +55,8 @@ public class Gun : MonoBehaviour
         fireRateModifier = 1;
         damageModifier = 1;
         knockbackModifier = 1;
+        bulletKnockbackModifier = 1;
+        muzzleInitialScale = muzzleFlash.transform.localScale;
     }
 
     void Update()
@@ -94,23 +107,48 @@ public class Gun : MonoBehaviour
             atkPressed = false;
             Shoot();
         }
+
+        if (muzzleFlash.activeInHierarchy)
+        {
+            muzzleFlash.transform.localScale += new Vector3(muzzleScaleModifier * Time.deltaTime, muzzleScaleModifier * Time.deltaTime, muzzleScaleModifier * Time.deltaTime);
+        }
     }
 
     void Shoot()
     {
         shooting = true;
+
+        foreach (SpriteRenderer sr in muzzleRenderers)
+        {
+            sr.color = muzzleGradient.Evaluate(Random.Range(0f, 1f));
+            sr.material.SetColor("_TintColor", muzzleGradient.Evaluate(Random.Range(0f, 1f)));
+        }
+
+        muzzleLight.intensity = Random.Range(1f, 25f);
+        muzzleLight.color = muzzleGradient.Evaluate(Random.Range(0f, 1f));
+
+        muzzleFlash.SetActive(true);
+
         for (int i = 0; i < bulletCount; i++)
         {
             GameObject shotBullet = Instantiate(bullet, firePoint.position, firePoint.rotation);
             Rigidbody bulletRb = shotBullet.GetComponent<Rigidbody>();
             shotBullet.GetComponent<Bullet>().damage = damage * damageModifier;
-            shotBullet.GetComponent<Bullet>().knockback = bulletKnockback * knockbackModifier;
+            shotBullet.GetComponent<Bullet>().knockback = bulletKnockback * bulletKnockbackModifier;
             Vector2 dir = transform.rotation * Vector2.right;
             Vector2 pDir = Vector2.Perpendicular(dir) * Random.Range(-spread, spread);
             bulletRb.velocity = (dir + pDir) * Random.Range(minSpeed, maxSpeed);
-            player.AddForce(-transform.right * knockback * (knockbackModifier / 2), ForceMode.Impulse);
+            player.AddForce(-transform.right * knockback * knockbackModifier, ForceMode.Impulse);
         }
+
         shootCd = 0;
+        Invoke(nameof(MuzzleFlashOff), Random.Range(minMuzzleDelay, maxMuzzleDelay));
         shooting = false;
+    }
+
+    void MuzzleFlashOff()
+    {
+        muzzleFlash.SetActive(false);
+        muzzleFlash.transform.localScale = muzzleInitialScale;
     }
 }

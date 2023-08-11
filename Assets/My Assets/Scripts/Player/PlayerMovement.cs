@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jumping")]
     [SerializeField] float jumpForce;
+    [SerializeField] float raycastDistance;
+    [SerializeField] string otherPlayerTag;
     bool canJump, jumpPressed;
 
     [Space]
@@ -55,6 +57,10 @@ public class PlayerMovement : MonoBehaviour
         speedModifier = 1;
         jumpModifier = 1;
         dashPowerModifier = 1;
+        if (gameObject.name == "Body 2")
+        {
+            rot = 180;
+        }
     }
 
     void Update()
@@ -131,7 +137,6 @@ public class PlayerMovement : MonoBehaviour
         {
             jumpPressed = false;
             rb.velocity = new Vector3(rb.velocity.x, jumpForce * jumpModifier, 0);
-            canJump = false;
         }
 
         if (dashPressed)
@@ -202,7 +207,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") || (collision.gameObject.CompareTag(otherPlayerTag) && collision.transform.position.y < transform.position.y))
         {
             canJump = true;
         }
@@ -210,7 +215,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") || (collision.gameObject.CompareTag(otherPlayerTag) && collision.transform.position.y < transform.position.y))
         {
             canJump = false;
         }
