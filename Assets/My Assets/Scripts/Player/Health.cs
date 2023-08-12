@@ -10,24 +10,31 @@ public class Health : MonoBehaviour
     [SerializeField] float maxHp;
     [SerializeField] float currentHp;
     [SerializeField] GameObject deathEffect;
-    [SerializeField] Slider hpSlider;
-    [SerializeField] Gradient gradient;
-    [SerializeField] Image fill;
-    [SerializeField] Image background;
     [SerializeField] Material deadMaterial;
     [SerializeField] UnityEvent onDeath;
-    [SerializeField] float hitBlinkDelay;
-    [SerializeField] GameObject[] eyes;
-    [SerializeField] float minBlinkTime, maxBlinkTime, minBlinkCooldown, maxBlinkCooldown;
+    MeshRenderer rend;
     BoxCollider col;
     float blinkCd;
     float hitBlinkCd;
     bool blinking, hitBlinking;
-
     [HideInInspector] public bool dead;
     [HideInInspector] public bool victory;
     [HideInInspector] public bool hit;
-    MeshRenderer rend;
+
+    [Space]
+
+    [Header("Health Slider")]
+    [SerializeField] Slider hpSlider;
+    [SerializeField] Gradient gradient;
+    [SerializeField] Image fill;
+    [SerializeField] Image background;
+
+    [Space]
+
+    [Header("Eyes")]
+    [SerializeField] GameObject[] eyes;
+    [SerializeField] float hitBlinkDelay;
+    [SerializeField] float minBlinkTime, maxBlinkTime, minBlinkCooldown, maxBlinkCooldown;
 
     [Space]
 

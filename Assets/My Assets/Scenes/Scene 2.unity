@@ -1107,39 +1107,6 @@ MonoBehaviour:
   currentHp: 0
   deathEffect: {fileID: 417761080263594737, guid: 7800b8f6b712bfe49bd663eeb3ebe1e4,
     type: 3}
-  hpSlider: {fileID: 1793079911}
-  gradient:
-    serializedVersion: 2
-    key0: {r: 1, g: 0, b: 0, a: 1}
-    key1: {r: 1, g: 0.9465649, b: 0, a: 1}
-    key2: {r: 0, g: 1, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 6554
-    ctime1: 32768
-    ctime2: 58982
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: -1
-    m_NumColorKeys: 3
-    m_NumAlphaKeys: 2
-  fill: {fileID: 1054788985}
-  background: {fileID: 492865170}
   deadMaterial: {fileID: 2100000, guid: 9eba26608c0b6ce44ac8e1cd018a441d, type: 2}
   onDeath:
     m_PersistentCalls:
@@ -1204,20 +1171,53 @@ MonoBehaviour:
           m_StringArgument: Death
           m_BoolArgument: 0
         m_CallState: 2
-  hitBlinkDelay: 0.25
+  dead: 0
+  victory: 0
+  hit: 0
+  hpSlider: {fileID: 1793079911}
+  gradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 0, b: 0, a: 1}
+    key1: {r: 1, g: 0.9465649, b: 0, a: 1}
+    key2: {r: 0, g: 1, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 6554
+    ctime1: 32768
+    ctime2: 58982
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 3
+    m_NumAlphaKeys: 2
+  fill: {fileID: 1054788985}
+  background: {fileID: 492865170}
   eyes:
   - {fileID: 269111773}
   - {fileID: 980608040}
   - {fileID: 127877756}
   - {fileID: 1995189822}
   - {fileID: 1133419310}
+  hitBlinkDelay: 0.25
   minBlinkTime: 0.1
   maxBlinkTime: 1
   minBlinkCooldown: 1
   maxBlinkCooldown: 10
-  dead: 0
-  victory: 0
-  hit: 0
   sounds: []
 --- !u!1 &141972920
 GameObject:
@@ -2315,11 +2315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: {fileID: 130519909}
   firePoint: {fileID: 141972921}
-  bullet: {fileID: 7758889591140968917, guid: 2fa053c900d7c46429c8138a5c65670d, type: 3}
-  damage: 0.25
   bulletCount: 1
-  minSpeed: 50
-  maxSpeed: 50
   spread: 0
   fireRate: 0.1
   automatic: 1
@@ -2338,6 +2334,16 @@ MonoBehaviour:
           m_StringArgument: Shoot
           m_BoolArgument: 0
         m_CallState: 2
+  shootKey: 32
+  fireRateModifier: 0
+  damageModifier: 0
+  knockbackModifier: 0
+  bulletKnockbackModifier: 0
+  bullet: {fileID: 7758889591140968917, guid: 2fa053c900d7c46429c8138a5c65670d, type: 3}
+  damage: 0.25
+  minSpeed: 50
+  maxSpeed: 50
+  timeToDestroy: 5
   bulletImpactSound:
     m_PersistentCalls:
       m_Calls:
@@ -2353,11 +2359,6 @@ MonoBehaviour:
           m_StringArgument: Hit
           m_BoolArgument: 0
         m_CallState: 2
-  shootKey: 32
-  fireRateModifier: 0
-  damageModifier: 0
-  knockbackModifier: 0
-  bulletKnockbackModifier: 0
   muzzleFlash: {fileID: 846455624}
   muzzleGradient:
     serializedVersion: 2
@@ -5445,7 +5446,7 @@ MonoBehaviour:
   victoryShadow2: {fileID: 1896167634}
   scoreManager: {fileID: 11400000, guid: 341434ae25504c344848cdbd17f90b97, type: 2}
   alreadyScored: 0
-  scenesCount: 5
+  scenesCount: 6
   sceneLoadDelay: 5
   anim: {fileID: 114466549}
 --- !u!1 &1597486891
@@ -6047,11 +6048,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: {fileID: 1896333575}
   firePoint: {fileID: 1430840912}
-  bullet: {fileID: 7758889591140968917, guid: a04486f73554cca4688afe43dfcdb54d, type: 3}
-  damage: 0.25
   bulletCount: 10
-  minSpeed: 20
-  maxSpeed: 30
   spread: 0.15
   fireRate: 0.8
   automatic: 1
@@ -6070,6 +6067,16 @@ MonoBehaviour:
           m_StringArgument: Shoot
           m_BoolArgument: 0
         m_CallState: 2
+  shootKey: 46
+  fireRateModifier: 0
+  damageModifier: 0
+  knockbackModifier: 0
+  bulletKnockbackModifier: 0
+  bullet: {fileID: 7758889591140968917, guid: a04486f73554cca4688afe43dfcdb54d, type: 3}
+  damage: 0.25
+  minSpeed: 20
+  maxSpeed: 30
+  timeToDestroy: 5
   bulletImpactSound:
     m_PersistentCalls:
       m_Calls:
@@ -6085,11 +6092,6 @@ MonoBehaviour:
           m_StringArgument: Hit
           m_BoolArgument: 0
         m_CallState: 2
-  shootKey: 46
-  fireRateModifier: 0
-  damageModifier: 0
-  knockbackModifier: 0
-  bulletKnockbackModifier: 0
   muzzleFlash: {fileID: 559901394}
   muzzleGradient:
     serializedVersion: 2
@@ -6891,39 +6893,6 @@ MonoBehaviour:
   currentHp: 0
   deathEffect: {fileID: 417761080263594737, guid: 7800b8f6b712bfe49bd663eeb3ebe1e4,
     type: 3}
-  hpSlider: {fileID: 1613131458}
-  gradient:
-    serializedVersion: 2
-    key0: {r: 1, g: 0, b: 0, a: 1}
-    key1: {r: 1, g: 0.9465649, b: 0, a: 1}
-    key2: {r: 0, g: 1, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 6554
-    ctime1: 32768
-    ctime2: 58982
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: -1
-    m_NumColorKeys: 3
-    m_NumAlphaKeys: 2
-  fill: {fileID: 742607796}
-  background: {fileID: 523645925}
   deadMaterial: {fileID: 2100000, guid: 5d0879d78df535240a0c201bcf4e0f57, type: 2}
   onDeath:
     m_PersistentCalls:
@@ -6988,20 +6957,53 @@ MonoBehaviour:
           m_StringArgument: Death
           m_BoolArgument: 0
         m_CallState: 2
-  hitBlinkDelay: 0.25
+  dead: 0
+  victory: 0
+  hit: 0
+  hpSlider: {fileID: 1613131458}
+  gradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 0, b: 0, a: 1}
+    key1: {r: 1, g: 0.9465649, b: 0, a: 1}
+    key2: {r: 0, g: 1, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 6554
+    ctime1: 32768
+    ctime2: 58982
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 3
+    m_NumAlphaKeys: 2
+  fill: {fileID: 742607796}
+  background: {fileID: 523645925}
   eyes:
   - {fileID: 1223500664}
   - {fileID: 1615915805}
   - {fileID: 1333267253}
   - {fileID: 367029812}
   - {fileID: 985139536}
+  hitBlinkDelay: 0.25
   minBlinkTime: 0.1
   maxBlinkTime: 1
   minBlinkCooldown: 1
   maxBlinkCooldown: 10
-  dead: 0
-  victory: 0
-  hit: 0
   sounds: []
 --- !u!114 &1896333576
 MonoBehaviour:

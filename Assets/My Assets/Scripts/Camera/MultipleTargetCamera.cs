@@ -6,15 +6,11 @@ public class MultipleTargetCamera : MonoBehaviour
     [SerializeField] List<Transform> targets;
     [SerializeField] Vector3 followOffset;
     [SerializeField] float smoothSpeed, fovZoomSpeed, minZoom, maxZoom, zoomLimiter, minHeight, maxHeight;
-    //Transform x1, x2;
     Camera cam;
-    float maxDistanceX, maxDistanceY;
 
     void Start()
     {
         cam = GetComponent<Camera>();
-        //x1 = GameObject.Find("x1").transform;
-        //x1 = GameObject.Find("x1").transform;
     }
 
     void LateUpdate()
@@ -35,17 +31,6 @@ public class MultipleTargetCamera : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, minHeight, transform.position.z);
         }
-
-        if (maxDistanceX < GetBiggestDistance('x'))
-        {
-            maxDistanceX = GetBiggestDistance('x');
-        }
-
-        if (maxDistanceY < GetBiggestDistance('y'))
-        {
-            maxDistanceY = GetBiggestDistance('y');
-        }
-        Debug.Log($"Max X: {maxDistanceX}     Max Y: {maxDistanceY}");
     }
 
     void MoveCamera()
@@ -56,7 +41,7 @@ public class MultipleTargetCamera : MonoBehaviour
 
     void Zoom()
     {
-        float newZoom = Mathf.Lerp(minZoom, maxZoom, (GetBiggestDistance('x') + GetBiggestDistance('y')) / zoomLimiter);
+        float newZoom = Mathf.Lerp(minZoom, maxZoom, (GetBiggestDistance('x') + GetBiggestDistance('y') * 2) / zoomLimiter);
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, newZoom, fovZoomSpeed * Time.deltaTime);
     }
 

@@ -16,7 +16,6 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jumping")]
     [SerializeField] float jumpForce;
-    [SerializeField] float raycastDistance;
     [SerializeField] string otherPlayerTag;
     [SerializeField] UnityEvent jumpSound;
     bool canJump, jumpPressed;
@@ -73,33 +72,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        if (Input.GetKey(up))
-        {
-            inputY = 1;
-        }
-        else
-        if (Input.GetKey(down))
-        {
-            inputY = -1;
-        }
-        else
-        {
-            inputY = 0;
-        }
-
-        if (Input.GetKey(right))
-        {
-            inputX = 1;
-        }
-        else
-        if (Input.GetKey(left))
-        {
-            inputX = -1;
-        }
-        else
-        {
-            inputX = 0;
-        }
+        PlayerInput();
 
         if (Input.GetKey(up) && canJump)
         {
@@ -152,6 +125,58 @@ public class PlayerMovement : MonoBehaviour
             dashCd = dashCooldown;
         }
 
+        GunRotation();
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if ((collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag(otherPlayerTag)) && transform.position.y > collision.transform.position.y)
+        {
+            canJump = true;
+        }
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag(otherPlayerTag))
+        {
+            canJump = false;
+        }
+    }
+
+    void PlayerInput()
+    {
+        if (Input.GetKey(up))
+        {
+            inputY = 1;
+        }
+        else
+        if (Input.GetKey(down))
+        {
+            inputY = -1;
+        }
+        else
+        {
+            inputY = 0;
+        }
+
+        if (Input.GetKey(right))
+        {
+            inputX = 1;
+        }
+        else
+        if (Input.GetKey(left))
+        {
+            inputX = -1;
+        }
+        else
+        {
+            inputX = 0;
+        }
+    }
+
+    void GunRotation()
+    {
         if (inputX == 1)
         {
             if (inputY == 0)
@@ -201,21 +226,5 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         gunHolder.rotation = Quaternion.Lerp(gunHolder.rotation, Quaternion.Euler(new Vector3(0, 0, rot)), rotSpeed * Time.deltaTime);
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag(otherPlayerTag) && collision.transform.position.y < transform.position.y)
-        {
-            canJump = true;
-        }
-    }
-
-    void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground") || (collision.gameObject.CompareTag(otherPlayerTag) && collision.transform.position.y < transform.position.y))
-        {
-            canJump = false;
-        }
     }
 }

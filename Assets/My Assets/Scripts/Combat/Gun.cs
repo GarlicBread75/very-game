@@ -10,14 +10,11 @@ public class Gun : MonoBehaviour
 
     [Header("Gun")]
     [SerializeField] Transform firePoint;
-    [SerializeField] GameObject bullet;
-    [SerializeField] float damage;
     [SerializeField] int bulletCount;
-    [SerializeField] float minSpeed, maxSpeed, spread;
+    [SerializeField] float spread;
     public float fireRate;
     [SerializeField] bool automatic;
     [SerializeField] UnityEvent shootSound;
-    [SerializeField] UnityEvent bulletImpactSound;
     [SerializeField] KeyCode shootKey;
     bool shootPressed, atkPressed, shooting;
     float shootCd;
@@ -25,9 +22,17 @@ public class Gun : MonoBehaviour
 
     [Space]
 
+    [Header("Bullet")]
+    [SerializeField] GameObject bullet;
+    [SerializeField] float damage, minSpeed, maxSpeed, timeToDestroy;
+    [SerializeField] UnityEvent bulletImpactSound;
+
+    [Space]
+
     [Header("Muzzle Flash")]
     [SerializeField] GameObject muzzleFlash;
     [SerializeField] Gradient muzzleGradient;
+    [SerializeField] Color colourKey;
     [SerializeField] SpriteRenderer[] muzzleRenderers;
     [SerializeField] Light muzzleLight;
     [SerializeField] float minMuzzleScale, maxMuzzleScale, minMuzzleFlashSpeed, maxMuzzleFlashSpeed, minMuzzleLifetime, maxMuzzleLifetime;
@@ -42,7 +47,7 @@ public class Gun : MonoBehaviour
 
     [Space]
 
-    [Header("Slider")]
+    [Header("Gun Cooldown Slider")]
     public Slider slider;
     public Gradient gradient1;
     public Gradient gradient2;
@@ -86,6 +91,7 @@ public class Gun : MonoBehaviour
         {
             atkPressed = true;
         }
+        colourKey = muzzleGradient.colorKeys[0].color;
     }
 
     void FixedUpdate()
@@ -133,9 +139,12 @@ public class Gun : MonoBehaviour
             Vector2 dir = transform.rotation * Vector2.right;
             Vector2 pDir = Vector2.Perpendicular(dir) * Random.Range(-spread, spread);
             bulletRb.velocity = (dir + pDir) * Random.Range(minSpeed, maxSpeed);
-            player.AddForce(-transform.right * knockback * knockbackModifier, ForceMode.Impulse);
-            Destroy(shotBullet, 10);
+            if (timeToDestroy != 0)
+            {
+                Destroy(shotBullet, timeToDestroy);
+            }
         }
+        player.AddForce(-transform.right * knockback * knockbackModifier, ForceMode.Impulse);
 
         shootCd = 0;
         shooting = false;
