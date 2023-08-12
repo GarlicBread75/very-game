@@ -1,7 +1,9 @@
 {
     "name": "Player",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:eb5c9e0ae5211284b9bb71c00abf7bf2"
+    ],
     "includePlatforms": [
         "Editor",
         "WebGL",

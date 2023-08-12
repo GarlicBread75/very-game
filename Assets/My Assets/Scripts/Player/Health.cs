@@ -19,6 +19,7 @@ public class Health : MonoBehaviour
     [SerializeField] float hitBlinkDelay;
     [SerializeField] GameObject[] eyes;
     [SerializeField] float minBlinkTime, maxBlinkTime, minBlinkCooldown, maxBlinkCooldown;
+    BoxCollider col;
     float blinkCd;
     float hitBlinkCd;
     bool blinking, hitBlinking;
@@ -37,6 +38,7 @@ public class Health : MonoBehaviour
     void Start()
     {
         rend = GetComponent<MeshRenderer>();
+        col = GetComponent<BoxCollider>();
         currentHp = maxHp;
 
         hpSlider.maxValue = maxHp;
@@ -51,6 +53,16 @@ public class Health : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (currentHp <= 0 && !dead)
+        {
+            Die();
+        }
+
+        if (currentHp > maxHp)
+        {
+            currentHp = maxHp;
+        }
+
         hpSlider.value = Mathf.Lerp(hpSlider.value, currentHp, 20 * Time.deltaTime);
         fill.color = gradient.Evaluate(hpSlider.normalizedValue);
         background.color = new Color(fill.color.r / 5, fill.color.g / 5, fill.color.b / 5);
@@ -89,11 +101,6 @@ public class Health : MonoBehaviour
             return;
         }
 
-        if (currentHp > maxHp)
-        {
-            currentHp = maxHp;
-        }
-
         if (blinkCd > 0)
         {
             blinkCd -= Time.fixedDeltaTime;
@@ -118,11 +125,6 @@ public class Health : MonoBehaviour
             {
                 HitBlinkOff();
             }
-        }
-
-        if (currentHp <= 0 && !dead)
-        {
-            Die();
         }
 
         if (hit && !dead)
@@ -203,6 +205,14 @@ public class Health : MonoBehaviour
     public void ToggleAngry(bool thingy)
     {
         eyes[4].SetActive(thingy);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Void"))
+        {
+            currentHp = 0;
+        }
     }
 
     IEnumerator Blink()

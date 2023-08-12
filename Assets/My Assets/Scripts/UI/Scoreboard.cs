@@ -9,11 +9,12 @@ public class Scoreboard : MonoBehaviour
     [SerializeField] TextMeshProUGUI p2ScoreText, p1ScoreTextShadow, p2ScoreTextShadow, victoryText, victoryShadow1, victoryShadow2;
     [SerializeField] ScoreManager scoreManager;
     int p1Score, p2Score;
+    [HideInInspector] public bool alreadyScored;
 
     [Space]
 
     [Header("Scene Load")]
-    [SerializeField] string[] sceneNames;
+    [SerializeField] int scenesCount;
     [SerializeField] float sceneLoadDelay;
     [SerializeField] Animator anim;
     bool changeScene;
@@ -33,12 +34,17 @@ public class Scoreboard : MonoBehaviour
 
         if (changeScene)
         {
-            SceneManager.LoadScene(sceneNames[Random.Range(0, sceneNames.Length)]);
+            SceneManager.LoadScene($"Scene {Random.Range(1, scenesCount + 1)}");
         }
     }
 
     public void IncreaseScore(int playerNum)
     {
+        if (alreadyScored)
+        {
+            return;
+        }
+
         if (playerNum == 1)
         {
             p1Score++;
@@ -67,5 +73,10 @@ public class Scoreboard : MonoBehaviour
     public void CanChangeScene()
     {
         changeScene = true;
+    }
+
+    public void AlreadyScored()
+    {
+        alreadyScored = true;
     }
 }

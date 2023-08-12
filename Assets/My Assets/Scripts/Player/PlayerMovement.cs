@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] float raycastDistance;
     [SerializeField] string otherPlayerTag;
+    [SerializeField] UnityEvent jumpSound;
     bool canJump, jumpPressed;
 
     [Space]
@@ -25,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float dashPower;
     [SerializeField] float dashCooldown;
     [SerializeField] GameObject dashReadyOutline;
+    [SerializeField] UnityEvent dashSound;
     Vector3 dashDir;
     bool dashPressed;
     float dashCd;
@@ -136,12 +139,14 @@ public class PlayerMovement : MonoBehaviour
         if (jumpPressed)
         {
             jumpPressed = false;
+            jumpSound.Invoke();
             rb.velocity = new Vector3(rb.velocity.x, jumpForce * jumpModifier, 0);
         }
 
         if (dashPressed)
         {
             dashPressed = false;
+            dashSound.Invoke();
             dashReadyOutline.SetActive(false);
             rb.AddForce(dashDir * dashPower * dashPowerModifier, ForceMode.Impulse);
             dashCd = dashCooldown;
@@ -163,7 +168,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 rot = 315;
             }
-            gunHolder.rotation = Quaternion.Lerp(gunHolder.rotation, Quaternion.Euler(new Vector3(0, 0, rot)), rotSpeed * Time.deltaTime);
         }
         else
         if (inputX == -1)
@@ -182,16 +186,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 rot = 225;
             }
-            gunHolder.rotation = Quaternion.Lerp(gunHolder.rotation, Quaternion.Euler(new Vector3(0, 0, rot)), rotSpeed * Time.deltaTime);
         }
         else
         if (inputX == 0)
         {
-            if (inputY == 0)
-            {
-
-            }
-            else
             if (inputY == 1)
             {
                 rot = 90;
@@ -201,13 +199,13 @@ public class PlayerMovement : MonoBehaviour
             {
                 rot = 270;
             }
-            gunHolder.rotation = Quaternion.Lerp(gunHolder.rotation, Quaternion.Euler(new Vector3(0, 0, rot)), rotSpeed * Time.deltaTime);
         }
+        gunHolder.rotation = Quaternion.Lerp(gunHolder.rotation, Quaternion.Euler(new Vector3(0, 0, rot)), rotSpeed * Time.deltaTime);
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground") || (collision.gameObject.CompareTag(otherPlayerTag) && collision.transform.position.y < transform.position.y))
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag(otherPlayerTag) && collision.transform.position.y < transform.position.y)
         {
             canJump = true;
         }

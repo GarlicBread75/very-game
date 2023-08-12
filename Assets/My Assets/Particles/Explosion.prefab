@@ -4769,7 +4769,7 @@ GameObject:
   - component: {fileID: 417761080263594739}
   - component: {fileID: 417761080263594738}
   m_Layer: 0
-  m_Name: Explosion Fire
+  m_Name: Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4801,7 +4801,7 @@ ParticleSystem:
   m_GameObject: {fileID: 417761080263594737}
   serializedVersion: 8
   lengthInSec: 0.1
-  simulationSpeed: 0.5
+  simulationSpeed: 0.6
   stopAction: 0
   cullingMode: 3
   ringBufferMode: 0

@@ -4,7 +4,6 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
-    bool nextSong;
 
     void Awake()
     {
@@ -13,8 +12,8 @@ public class AudioManager : MonoBehaviour
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
 
-            s.source.volume = s.volume;
-            s.source.pitch = s.pitch;
+            s.source.volume = UnityEngine.Random.Range(s.minVolume, s.maxVolume);
+            s.source.pitch = UnityEngine.Random.Range(s.minPitch, s.maxPitch);
             s.source.loop = s.loop;
         }
     }
@@ -22,6 +21,8 @@ public class AudioManager : MonoBehaviour
     public void Play(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
+        s.source.volume = UnityEngine.Random.Range(s.minVolume, s.maxVolume);
+        s.source.pitch = UnityEngine.Random.Range(s.minPitch, s.maxPitch);
         s.source.Play();
     }
 
@@ -34,29 +35,11 @@ public class AudioManager : MonoBehaviour
     public void IsPlaying(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
-
+        s.source.volume = UnityEngine.Random.Range(s.minVolume, s.maxVolume);
+        s.source.pitch = UnityEngine.Random.Range(s.minPitch, s.maxPitch);
         if (!s.source.isPlaying)
         {
             s.source.Play();
-        }
-    }
-
-    void SongDonePlaying(string name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-
-        if (!s.source.isPlaying)
-        {
-            if (nextSong)
-            {
-                Play("Background 1");
-                nextSong = false;
-            }
-            else
-            {
-                Play("Background 2");
-                nextSong= true;
-            }
         }
     }
 }

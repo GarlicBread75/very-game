@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Pickup : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class Pickup : MonoBehaviour
 
     [SerializeField] Vector3 particlesOffset;
     [SerializeField] float maxFallSpeed;
+    [SerializeField] UnityEvent healSound, buffSound;
     MeshRenderer thisRend, rend1, rend2;
     CapsuleCollider col;
     GameObject particles;
@@ -35,6 +37,7 @@ public class Pickup : MonoBehaviour
     Gun gun1, gun2;
     int pickupNum;
     Rigidbody rb;
+    Events thing;
     #endregion
 
     void Start()
@@ -49,6 +52,9 @@ public class Pickup : MonoBehaviour
 
     void Awake()
     {
+        thing = GameObject.Find("------------------------").GetComponent<Events>();
+        healSound = thing.healSound;
+        buffSound = thing.buffSound;
         thisRend = GetComponent<MeshRenderer>();
         pickupNum = Random.Range(0, pickupNames.Length);
         thisRend.material = materials[pickupNum];
@@ -134,7 +140,7 @@ public class Pickup : MonoBehaviour
             rend2.material = outlineMaterials[pickupNum];
             rend2.enabled = true;
         }
-
+        buffSound.Invoke();
         switch (pickupNum)
         {
             case 0:
@@ -153,24 +159,19 @@ public class Pickup : MonoBehaviour
                 gun.bulletKnockbackModifier = bulletKnockbackModifier;
                 break;
         }
-
         thisRend.enabled = false;
         em = particlesSystem.emission;
         em.enabled = false;
-
         for (int i = 0; i < particles.transform.childCount; i++)
         {
             em = particles.transform.GetChild(i).GetComponentInChildren<ParticleSystem>().emission;
             em.enabled = false;
         }
-
         particlesSystem.Stop();
         Destroy(particles);
         particlesSystem = null;
         col.enabled = false;
-
         yield return new WaitForSeconds(duration);
-
         if (num == 1)
         {
             rend1.enabled = false;
@@ -180,7 +181,6 @@ public class Pickup : MonoBehaviour
         {
             rend2.enabled = false;
         }
-
         switch (pickupNum)
         {
             case 0:
@@ -199,7 +199,6 @@ public class Pickup : MonoBehaviour
                 gun.bulletKnockbackModifier = 1;
                 break;
         }
-
         Destroy(gameObject);
     }
 
@@ -216,28 +215,23 @@ public class Pickup : MonoBehaviour
             rend2.material = outlineMaterials[pickupNum];
             rend2.enabled = true;
         }
-
+        buffSound.Invoke();
         player.speedModifier = speedModifier;
         player.jumpModifier = jumpModifier;
         player.dashPowerModifier = dashPowerModifier;
-
         thisRend.enabled = false;
         em = particlesSystem.emission;
         em.enabled = false;
-
         for (int i = 0; i < particles.transform.childCount; i++)
         {
             em = particles.transform.GetChild(i).GetComponentInChildren<ParticleSystem>().emission;
             em.enabled = false;
         }
-
         particlesSystem.Stop();
         Destroy(particles);
         particlesSystem = null;
         col.enabled = false;
-
         yield return new WaitForSeconds(duration);
-
         if (num == 1)
         {
             rend1.enabled = false;
@@ -247,7 +241,6 @@ public class Pickup : MonoBehaviour
         {
             rend2.enabled = false;
         }
-
         player.speedModifier = 1;
         player.jumpModifier = 1;
         player.dashPowerModifier = 1;
@@ -256,25 +249,21 @@ public class Pickup : MonoBehaviour
 
     IEnumerator Buff(Health hp, float heal)
     {
+        healSound.Invoke();
         hp.Heal(heal);
-
         thisRend.enabled = false;
         em = particlesSystem.emission;
         em.enabled = false;
-
         for (int i = 0; i < particles.transform.childCount; i++)
         {
             em = particles.transform.GetChild(i).GetComponentInChildren<ParticleSystem>().emission;
             em.enabled = false;
         }
-
         particlesSystem.Stop();
         Destroy(particles);
         particlesSystem = null;
         col.enabled = false;
-
         yield return new WaitForSeconds(duration);
-
         Destroy(gameObject);
     }
 }
