@@ -14,7 +14,6 @@ public class Scoreboard : MonoBehaviour
     [Space]
 
     [Header("Scene Load")]
-    [SerializeField] int scenesCount;
     [SerializeField] float sceneLoadDelay;
     [SerializeField] Animator anim;
     bool changeScene;
@@ -34,7 +33,7 @@ public class Scoreboard : MonoBehaviour
 
         if (changeScene)
         {
-            SceneManager.LoadScene($"Scene {Random.Range(1, scenesCount + 1)}");
+            SceneManager.LoadScene("Level");
         }
     }
 

@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Pickup : MonoBehaviour
 {
@@ -28,9 +27,11 @@ public class Pickup : MonoBehaviour
 
     [SerializeField] Vector3 particlesOffset;
     [SerializeField] float maxFallSpeed;
-    [SerializeField] UnityEvent healSound, buffSound;
-    MeshRenderer thisRend, rend1, rend2;
+    [SerializeField] AudioSource healSound, buffSound;
+    [SerializeField] float minVolume, maxVolume, minPitch, maxPitch;
+    MeshRenderer thisRend, buffOutline1, buffOutline2;
     CapsuleCollider col;
+    PickupSpawner spawner;
     GameObject particles;
     ParticleSystem particlesSystem;
     ParticleSystem.EmissionModule em;
@@ -42,8 +43,8 @@ public class Pickup : MonoBehaviour
 
     void Start()
     {
-        rend1 = GameObject.Find("Outline 1").GetComponent<MeshRenderer>();
-        rend2 = GameObject.Find("Outline 2").GetComponent<MeshRenderer>();
+        buffOutline1 = GameObject.Find("Outline 1").GetComponent<MeshRenderer>();
+        buffOutline2 = GameObject.Find("Outline 2").GetComponent<MeshRenderer>();
         gun1 = GameObject.Find("Gun 1").GetComponent<Gun>();
         gun2 = GameObject.Find("Gun 2").GetComponent<Gun>();
         col = GetComponent<CapsuleCollider>();
@@ -52,9 +53,9 @@ public class Pickup : MonoBehaviour
 
     void Awake()
     {
-        thing = GameObject.Find("------------------------").GetComponent<Events>();
-        healSound = thing.healSound;
-        buffSound = thing.buffSound;
+        spawner = GameObject.Find("Pickup Spawner").GetComponent<PickupSpawner>();
+        healSound = spawner.healSound;
+        buffSound = spawner.buffSound;
         thisRend = GetComponent<MeshRenderer>();
         pickupNum = Random.Range(0, pickupNames.Length);
         thisRend.material = materials[pickupNum];
@@ -70,6 +71,11 @@ public class Pickup : MonoBehaviour
         }
 
         particlesSystem.Play();
+
+        if (pickupNum == 5)
+        {
+            particlesOffset.y += 1;
+        }
     }
 
     void Update()
@@ -94,17 +100,17 @@ public class Pickup : MonoBehaviour
         {
             if (pickupNum >= 0 && pickupNum <= 2)
             {
-                StartCoroutine(Buff(gun1, collision.gameObject.GetComponent<Health>(), 1));
+                StartCoroutine(GunBuff(gun1, collision.gameObject.GetComponent<Health>(), 1));
             }
             else
             if (pickupNum == 3)
             {
-                StartCoroutine(Buff(collision.gameObject.GetComponent<PlayerMovement>(), 1));
+                StartCoroutine(MovementBuff(collision.gameObject.GetComponent<PlayerMovement>(), 1));
             }
             else
             if (pickupNum == 4)
             {
-                StartCoroutine(Buff(collision.gameObject.GetComponent<Health>(), healAmount));
+                StartCoroutine(Heal(collision.gameObject.GetComponent<Health>()));
             }
         }
         else
@@ -112,35 +118,42 @@ public class Pickup : MonoBehaviour
         {
             if (pickupNum >= 0 && pickupNum <= 2)
             {
-                StartCoroutine(Buff(gun2, collision.gameObject.GetComponent<Health>(), 2));
+                StartCoroutine(GunBuff(gun2, collision.gameObject.GetComponent<Health>(), 2));
             }
             else
             if (pickupNum == 3)
             {
-                StartCoroutine(Buff(collision.gameObject.GetComponent<PlayerMovement>(), 2));
+                StartCoroutine(MovementBuff(collision.gameObject.GetComponent<PlayerMovement>(), 2));
             }
             else
             if (pickupNum == 4)
             {
-                StartCoroutine(Buff(collision.gameObject.GetComponent<Health>(), healAmount));
+                StartCoroutine(Heal(collision.gameObject.GetComponent<Health>()));
             }
         }
     }
 
-    IEnumerator Buff(Gun gun, Health hp, int num)
+    void PlaySound(AudioSource source)
+    {
+        source.volume = Random.Range(minVolume, maxVolume);
+        source.pitch = Random.Range(minPitch, maxPitch);
+        source.PlayOneShot(source.clip);
+    }
+
+    IEnumerator GunBuff(Gun gun, Health hp, int num)
     {
         if (num == 1)
         {
-            rend1.material = outlineMaterials[pickupNum];
-            rend1.enabled = true;
+            buffOutline1.material = outlineMaterials[pickupNum];
+            buffOutline1.enabled = true;
         }
         else
         if (num == 2)
         {
-            rend2.material = outlineMaterials[pickupNum];
-            rend2.enabled = true;
+            buffOutline2.material = outlineMaterials[pickupNum];
+            buffOutline2.enabled = true;
         }
-        buffSound.Invoke();
+        PlaySound(buffSound);
         switch (pickupNum)
         {
             case 0:
@@ -174,12 +187,12 @@ public class Pickup : MonoBehaviour
         yield return new WaitForSeconds(duration);
         if (num == 1)
         {
-            rend1.enabled = false;
+            buffOutline1.enabled = false;
         }
         else
         if (num == 2)
         {
-            rend2.enabled = false;
+            buffOutline2.enabled = false;
         }
         switch (pickupNum)
         {
@@ -202,20 +215,20 @@ public class Pickup : MonoBehaviour
         Destroy(gameObject);
     }
 
-    IEnumerator Buff(PlayerMovement player, int num)
+    IEnumerator MovementBuff(PlayerMovement player, int num)
     {
         if (num == 1)
         {
-            rend1.material = outlineMaterials[pickupNum];
-            rend1.enabled = true;
+            buffOutline1.material = outlineMaterials[pickupNum];
+            buffOutline1.enabled = true;
         }
         else
         if (num == 2)
         {
-            rend2.material = outlineMaterials[pickupNum];
-            rend2.enabled = true;
+            buffOutline2.material = outlineMaterials[pickupNum];
+            buffOutline2.enabled = true;
         }
-        buffSound.Invoke();
+        PlaySound(buffSound);
         player.speedModifier = speedModifier;
         player.jumpModifier = jumpModifier;
         player.dashPowerModifier = dashPowerModifier;
@@ -234,12 +247,12 @@ public class Pickup : MonoBehaviour
         yield return new WaitForSeconds(duration);
         if (num == 1)
         {
-            rend1.enabled = false;
+            buffOutline1.enabled = false;
         }
         else
         if (num == 2)
         {
-            rend2.enabled = false;
+            buffOutline2.enabled = false;
         }
         player.speedModifier = 1;
         player.jumpModifier = 1;
@@ -247,10 +260,10 @@ public class Pickup : MonoBehaviour
         Destroy(gameObject);
     }
 
-    IEnumerator Buff(Health hp, float heal)
+    IEnumerator Heal(Health hp)
     {
-        healSound.Invoke();
-        hp.Heal(heal);
+        PlaySound(healSound);
+        hp.Heal(healAmount);
         thisRend.enabled = false;
         em = particlesSystem.emission;
         em.enabled = false;

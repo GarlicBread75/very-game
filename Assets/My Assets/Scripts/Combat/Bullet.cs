@@ -1,19 +1,19 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Bullet : MonoBehaviour
 {
     [SerializeField] string targetTag;
     [SerializeField] GameObject hitEffect;
-    [HideInInspector] public float damage, knockback;
-    public UnityEvent impactSound;
+    public AudioSource impactSound;
+    [SerializeField] float minVolume, maxVolume, minPitch, maxPitch;
+    float damage, knockback;
     Health hp;
 
     void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag(targetTag))
         {
-            impactSound.Invoke();
+            PlaySound(impactSound);
             hp = collision.GetComponent<Health>();
             hp.TakeDmg(damage);
             hp.hit = true;
@@ -29,5 +29,18 @@ public class Bullet : MonoBehaviour
         GameObject effect = Instantiate(hitEffect, transform.position,Quaternion.identity);
         Destroy(effect, 0.5f);
         Destroy(gameObject);
+    }
+
+    void PlaySound(AudioSource source)
+    {
+        source.volume = Random.Range(minVolume, maxVolume);
+        source.pitch = Random.Range(minPitch, maxPitch);
+        source.PlayOneShot(source.clip);
+    }
+
+    public void SetStats(float dmg, float force)
+    {
+        damage = dmg;
+        knockback = force;
     }
 }

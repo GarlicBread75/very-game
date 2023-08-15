@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,7 +16,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jumping")]
     [SerializeField] float jumpForce;
     [SerializeField] string otherPlayerTag;
-    [SerializeField] UnityEvent jumpSound;
     bool canJump, jumpPressed;
 
     [Space]
@@ -26,7 +24,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float dashPower;
     [SerializeField] float dashCooldown;
     [SerializeField] GameObject dashReadyOutline;
-    [SerializeField] UnityEvent dashSound;
     Vector3 dashDir;
     bool dashPressed;
     float dashCd;
@@ -45,6 +42,14 @@ public class PlayerMovement : MonoBehaviour
     [Header("Gun")]
     [SerializeField] Transform gunHolder;
     [SerializeField] float rotSpeed;
+
+    [Space]
+
+    [Header("Sounds")]
+    [SerializeField] AudioSource jumpSound;
+    [SerializeField] AudioSource dashSound;
+    [SerializeField] float minVolume, maxVolume, minPitch, maxPitch;
+
     int rot;
 
     [HideInInspector] public float speedModifier, jumpModifier, dashPowerModifier;
@@ -112,14 +117,14 @@ public class PlayerMovement : MonoBehaviour
         if (jumpPressed)
         {
             jumpPressed = false;
-            jumpSound.Invoke();
+            PlaySound(jumpSound);
             rb.velocity = new Vector3(rb.velocity.x, jumpForce * jumpModifier, 0);
         }
 
         if (dashPressed)
         {
             dashPressed = false;
-            dashSound.Invoke();
+            PlaySound(dashSound);
             dashReadyOutline.SetActive(false);
             rb.AddForce(dashDir * dashPower * dashPowerModifier, ForceMode.Impulse);
             dashCd = dashCooldown;
@@ -226,5 +231,15 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         gunHolder.rotation = Quaternion.Lerp(gunHolder.rotation, Quaternion.Euler(new Vector3(0, 0, rot)), rotSpeed * Time.deltaTime);
+    }
+
+    void PlaySound(AudioSource source)
+    {
+        source.volume = Random.Range(minVolume, maxVolume);
+        source.pitch = Random.Range(minPitch, maxPitch);
+        if (!source.isPlaying)
+        {
+            source.Play();
+        }
     }
 }

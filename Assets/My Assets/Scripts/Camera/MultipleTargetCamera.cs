@@ -1,9 +1,8 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MultipleTargetCamera : MonoBehaviour
 {
-    [SerializeField] List<Transform> targets;
+    [SerializeField] Transform[] targets;
     [SerializeField] Vector3 followOffset;
     [SerializeField] float smoothSpeed, fovZoomSpeed, minZoom, maxZoom, zoomLimiter, minHeight, maxHeight;
     Camera cam;
@@ -15,10 +14,21 @@ public class MultipleTargetCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        if (targets.Count == 0)
+        if (targets.Length == 0)
         {
             return;
         }
+
+        if (targets[0] == null)
+        {
+            targets[0] = GameObject.Find("Body 1").transform;
+        }
+
+        if (targets[1] == null)
+        {
+            targets[1] = GameObject.Find("Body 2").transform;
+        }
+
         MoveCamera();
         Zoom();
 
@@ -48,7 +58,7 @@ public class MultipleTargetCamera : MonoBehaviour
     float GetBiggestDistance(char thing)
     {
         var bounds = new Bounds(targets[0].position, Vector3.zero);
-        for (int i = 0; i < targets.Count; i++)
+        for (int i = 0; i < targets.Length; i++)
         {
             bounds.Encapsulate(targets[i].position);
         }
@@ -65,14 +75,14 @@ public class MultipleTargetCamera : MonoBehaviour
 
     Vector3 GetCenterPoint()
     {
-        if (targets.Count == 1)
+        if (targets.Length == 1)
         {
             return targets[0].position;
         }
         else
         {
             var bounds = new Bounds(targets[0].position, Vector3.zero);
-            for (int i = 0; i < targets.Count; i++)
+            for (int i = 0; i < targets.Length; i++)
             {
                 bounds.Encapsulate(targets[i].position);
             }

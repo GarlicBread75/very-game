@@ -13,7 +13,6 @@ public class Health : MonoBehaviour
     [SerializeField] Material deadMaterial;
     [SerializeField] UnityEvent onDeath;
     MeshRenderer rend;
-    BoxCollider col;
     float blinkCd;
     float hitBlinkCd;
     bool blinking, hitBlinking;
@@ -35,17 +34,19 @@ public class Health : MonoBehaviour
     [SerializeField] GameObject[] eyes;
     [SerializeField] float hitBlinkDelay;
     [SerializeField] float minBlinkTime, maxBlinkTime, minBlinkCooldown, maxBlinkCooldown;
+    [SerializeField] string otherPlayerName;
+    Health otherPlayer;
 
     [Space]
 
     [Header("Sounds")]
-    [SerializeField] UnityEvent[] sounds;
+    [SerializeField] AudioSource deathSound;
+    [SerializeField] float minVolume, maxVolume, minPitch, maxPitch;
     #endregion
 
     void Start()
     {
         rend = GetComponent<MeshRenderer>();
-        col = GetComponent<BoxCollider>();
         currentHp = maxHp;
 
         hpSlider.maxValue = maxHp;
@@ -54,6 +55,7 @@ public class Health : MonoBehaviour
 
     void Awake()
     {
+        otherPlayer = GameObject.Find(otherPlayerName).GetComponent<Health>();
         blinkCd = Random.Range(minBlinkCooldown, maxBlinkCooldown);
         hitBlinkCd = hitBlinkDelay;
     }
@@ -74,6 +76,11 @@ public class Health : MonoBehaviour
         fill.color = gradient.Evaluate(hpSlider.normalizedValue);
         background.color = new Color(fill.color.r / 5, fill.color.g / 5, fill.color.b / 5);
 
+        if (otherPlayer == null)
+        {
+            otherPlayer = GameObject.Find(otherPlayerName).GetComponent<Health>();
+        }
+
         if (dead)
         {
             foreach (GameObject eye in eyes)
@@ -91,7 +98,7 @@ public class Health : MonoBehaviour
             return;
         }
         else
-        if (victory)
+        if (otherPlayer.dead)
         {
             foreach (GameObject eye in eyes)
             {
@@ -167,8 +174,17 @@ public class Health : MonoBehaviour
 
     #endregion
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Void"))
+        {
+            currentHp = 0;
+        }
+    }
+
     void Die()
     {
+        PlaySound(deathSound);
         GameObject effect = Instantiate(deathEffect, transform.position, Quaternion.identity);
         Destroy(effect, 3f);
         rend.material = deadMaterial;
@@ -214,11 +230,13 @@ public class Health : MonoBehaviour
         eyes[4].SetActive(thingy);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void PlaySound(AudioSource source)
     {
-        if (collision.gameObject.CompareTag("Void"))
+        source.volume = Random.Range(minVolume, maxVolume);
+        source.pitch = Random.Range(minPitch, maxPitch);
+        if (!source.isPlaying)
         {
-            currentHp = 0;
+            source.Play();
         }
     }
 

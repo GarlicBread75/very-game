@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class Gun : MonoBehaviour
@@ -14,7 +13,6 @@ public class Gun : MonoBehaviour
     [SerializeField] float spread;
     public float fireRate;
     [SerializeField] bool automatic;
-    [SerializeField] UnityEvent shootSound;
     [SerializeField] KeyCode shootKey;
     bool shootPressed, atkPressed, shooting;
     float shootCd;
@@ -25,14 +23,12 @@ public class Gun : MonoBehaviour
     [Header("Bullet")]
     [SerializeField] GameObject bullet;
     [SerializeField] float damage, minSpeed, maxSpeed, timeToDestroy;
-    [SerializeField] UnityEvent bulletImpactSound;
 
     [Space]
 
     [Header("Muzzle Flash")]
     [SerializeField] GameObject muzzleFlash;
     [SerializeField] Gradient muzzleGradient;
-    [SerializeField] Color colourKey;
     [SerializeField] SpriteRenderer[] muzzleRenderers;
     [SerializeField] Light muzzleLight;
     [SerializeField] float minMuzzleScale, maxMuzzleScale, minMuzzleFlashSpeed, maxMuzzleFlashSpeed, minMuzzleLifetime, maxMuzzleLifetime;
@@ -54,6 +50,13 @@ public class Gun : MonoBehaviour
     [SerializeField] Image fill;
     [SerializeField] Image background;
     [HideInInspector] public Gradient gr;
+
+    [Space]
+
+    [Header("Sounds")]
+    [SerializeField] AudioSource shootSound;
+    [SerializeField] AudioSource bulletImpactSound;
+    [SerializeField] float minVolume, maxVolume, minPitch, maxPitch;
     #endregion
 
     void Awake()
@@ -91,7 +94,6 @@ public class Gun : MonoBehaviour
         {
             atkPressed = true;
         }
-        colourKey = muzzleGradient.colorKeys[0].color;
     }
 
     void FixedUpdate()
@@ -127,18 +129,17 @@ public class Gun : MonoBehaviour
     void Shoot()
     {
         shooting = true;
-        shootSound.Invoke();
+        PlaySound(shootSound);
         StartCoroutine(MuzzleFlash());
         for (int i = 0; i < bulletCount; i++)
         {
             GameObject shotBullet = Instantiate(bullet, firePoint.position, firePoint.rotation);
-            Rigidbody bulletRb = shotBullet.GetComponent<Rigidbody>();
-            shotBullet.GetComponent<Bullet>().damage = damage * damageModifier;
-            shotBullet.GetComponent<Bullet>().knockback = bulletKnockback * bulletKnockbackModifier;
-            shotBullet.GetComponent<Bullet>().impactSound = bulletImpactSound;
+            Bullet bulllet = shotBullet.GetComponent<Bullet>();
+            bulllet.SetStats(damage * damageModifier, bulletKnockback * bulletKnockbackModifier);
+            bulllet.impactSound = bulletImpactSound;
             Vector2 dir = transform.rotation * Vector2.right;
             Vector2 pDir = Vector2.Perpendicular(dir) * Random.Range(-spread, spread);
-            bulletRb.velocity = (dir + pDir) * Random.Range(minSpeed, maxSpeed);
+            shotBullet.GetComponent<Rigidbody>().velocity = (dir + pDir) * Random.Range(minSpeed, maxSpeed);
             if (timeToDestroy != 0)
             {
                 Destroy(shotBullet, timeToDestroy);
@@ -148,6 +149,13 @@ public class Gun : MonoBehaviour
 
         shootCd = 0;
         shooting = false;
+    }
+
+    void PlaySound(AudioSource source)
+    {
+        source.volume = Random.Range(minVolume, maxVolume);
+        source.pitch = Random.Range(minPitch, maxPitch);
+        source.PlayOneShot(source.clip);
     }
 
     IEnumerator MuzzleFlash()
