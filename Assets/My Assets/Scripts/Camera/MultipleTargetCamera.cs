@@ -7,6 +7,12 @@ public class MultipleTargetCamera : MonoBehaviour
     [SerializeField] float smoothSpeed, fovZoomSpeed, minZoom, maxZoom, zoomLimiter, minHeight, maxHeight;
     Camera cam;
 
+    [Space]
+
+    [SerializeField] bool staticCamera;
+    [SerializeField] Vector3 staticPos;
+    [SerializeField] float staticFov;
+
     void Start()
     {
         cam = GetComponent<Camera>();
@@ -29,17 +35,25 @@ public class MultipleTargetCamera : MonoBehaviour
             targets[1] = GameObject.Find("Body 2").transform;
         }
 
-        MoveCamera();
-        Zoom();
-
-        if (transform.position.y > maxHeight)
+        if (staticCamera)
         {
-            transform.position = new Vector3(transform.position.x, maxHeight, transform.position.z);
+            transform.position = Vector3.Lerp(transform.position, staticPos, smoothSpeed * Time.deltaTime);
+            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, staticFov, fovZoomSpeed * Time.deltaTime);
         }
         else
-        if (transform.position.y < minHeight)
         {
-            transform.position = new Vector3(transform.position.x, minHeight, transform.position.z);
+            MoveCamera();
+            Zoom();
+
+            if (transform.position.y > maxHeight)
+            {
+                transform.position = new Vector3(transform.position.x, maxHeight, transform.position.z);
+            }
+            else
+            if (transform.position.y < minHeight)
+            {
+                transform.position = new Vector3(transform.position.x, minHeight, transform.position.z);
+            }
         }
     }
 

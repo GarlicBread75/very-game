@@ -160,7 +160,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 6e5fb118e575dbe44906a4267b2c0282, type: 2}
   - {fileID: 2100000, guid: 8f3c2161d4309fe49a541cdb3ea6d185, type: 2}
   - {fileID: 2100000, guid: 6ae85e7b0e0a8064b8bee774709a939c, type: 2}
-  outlineMaterials:
+  outlineColours:
   - {fileID: 2100000, guid: 13645f1c23624204eaf0ad78525ccea1, type: 2}
   - {fileID: 2100000, guid: c50eab86fb4203c4b81722449a8c27c4, type: 2}
   - {fileID: 2100000, guid: d072255970fee9f4ba4ac5ce6895adf7, type: 2}
@@ -172,13 +172,13 @@ MonoBehaviour:
   - {fileID: 7131401307255788800, guid: 9c1bd5c62e317b444ba71331ce9f5fa4, type: 3}
   - {fileID: 882435891557569105, guid: 31aafa0172ad5e64c99b86b81aca22c6, type: 3}
   duration: 8
-  damageModifier: 1.25
+  damageModifier: 1.5
   fireRateModifier: 2
   knockbackModifier: 1.25
-  bulletKnockbackModifier: 0
-  speedModifier: 1.5
-  jumpModifier: 1.5
-  dashPowerModifier: 1.5
+  bulletKnockbackModifier: 1.5
+  speedModifier: 1.35
+  jumpModifier: 1.35
+  dashPowerModifier: 1.35
   healAmount: 5
   particlesOffset: {x: 0, y: -1.5, z: 0}
   maxFallSpeed: -15

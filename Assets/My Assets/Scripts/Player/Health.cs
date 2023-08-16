@@ -35,6 +35,7 @@ public class Health : MonoBehaviour
     [SerializeField] float hitBlinkDelay;
     [SerializeField] float minBlinkTime, maxBlinkTime, minBlinkCooldown, maxBlinkCooldown;
     [SerializeField] string otherPlayerName;
+    [SerializeField] bool menu;
     Health otherPlayer;
 
     [Space]
@@ -46,22 +47,45 @@ public class Health : MonoBehaviour
 
     void Start()
     {
+        if (menu)
+        {
+            return;
+        }
+        
         rend = GetComponent<MeshRenderer>();
         currentHp = maxHp;
-
         hpSlider.maxValue = maxHp;
         hpSlider.value = currentHp;
     }
 
     void Awake()
     {
-        otherPlayer = GameObject.Find(otherPlayerName).GetComponent<Health>();
         blinkCd = Random.Range(minBlinkCooldown, maxBlinkCooldown);
+        if (menu)
+        {
+            return;
+        }
+
+        otherPlayer = GameObject.Find(otherPlayerName).GetComponent<Health>();
         hitBlinkCd = hitBlinkDelay;
     }
 
     void FixedUpdate()
     {
+        if (menu)
+        {
+            if (blinkCd > 0)
+            {
+                blinkCd -= Time.fixedDeltaTime;
+            }
+            else
+            {
+                blinkCd = Random.Range(minBlinkCooldown, maxBlinkCooldown);
+                StartCoroutine(Blink());
+            }
+            return;
+        }
+
         if (currentHp <= 0 && !dead)
         {
             Die();
@@ -176,7 +200,7 @@ public class Health : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Void"))
+        if (collision.gameObject.CompareTag("Void") && !menu)
         {
             currentHp = 0;
         }

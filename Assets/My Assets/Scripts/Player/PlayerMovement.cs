@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] float acceleration;
+    [SerializeField] bool menu;
     Rigidbody rb;
     Health hp;
     Vector3 moveDir;
@@ -59,8 +60,12 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        hp = GetComponent<Health>();
         dashCd = dashCooldown;
+        if (menu)
+        {
+            return;
+        }
+        hp = GetComponent<Health>();
         speedModifier = 1;
         jumpModifier = 1;
         dashPowerModifier = 1;
@@ -72,9 +77,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (hp.dead)
+        if (!menu)
         {
-            return;
+            if (hp.dead)
+            {
+                return;
+            }
         }
 
         PlayerInput();
@@ -95,9 +103,12 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (hp.dead)
+        if (!menu)
         {
-            return;
+            if (hp.dead)
+            {
+                return;
+            }
         }
 
         rb.AddForce(moveDir * acceleration * speedModifier, ForceMode.Force);
@@ -130,6 +141,10 @@ public class PlayerMovement : MonoBehaviour
             dashCd = dashCooldown;
         }
 
+        if (menu)
+        {
+            return;
+        }
         GunRotation();
     }
 
