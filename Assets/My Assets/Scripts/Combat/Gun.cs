@@ -9,6 +9,7 @@ public class Gun : MonoBehaviour
 
     [Header("Gun")]
     [SerializeField] Transform firePoint;
+    [SerializeField] GameObject shootExplosion;
     [SerializeField] int bulletCount;
     [SerializeField] float spread;
     public float fireRate;
@@ -130,6 +131,8 @@ public class Gun : MonoBehaviour
     {
         shooting = true;
         PlaySound(shootSound);
+        GameObject effect = Instantiate(shootExplosion, firePoint.position, Quaternion.identity);
+        Destroy(effect, 2.1f);
         StartCoroutine(MuzzleFlash());
         for (int i = 0; i < bulletCount; i++)
         {

@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jumping")]
     [SerializeField] float jumpForce;
     [SerializeField] string otherPlayerTag;
+    [SerializeField] GameObject jumpDust;
     bool canJump, jumpPressed;
 
     [Space]
@@ -24,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Dashing")]
     [SerializeField] float dashPower;
     [SerializeField] float dashCooldown;
+    [SerializeField] GameObject dashDust;
     [SerializeField] GameObject dashReadyOutline;
     Vector3 dashDir;
     bool dashPressed;
@@ -129,6 +131,8 @@ public class PlayerMovement : MonoBehaviour
         {
             jumpPressed = false;
             PlaySound(jumpSound);
+            GameObject thing = Instantiate(jumpDust, transform.position - new Vector3(0, 0.65f, 0), Quaternion.identity);
+            Destroy(thing, 0.5f);
             rb.velocity = new Vector3(rb.velocity.x, jumpForce * jumpModifier, 0);
         }
 
@@ -136,6 +140,8 @@ public class PlayerMovement : MonoBehaviour
         {
             dashPressed = false;
             PlaySound(dashSound);
+            GameObject thing = Instantiate(dashDust, transform.position - new Vector3(0, 0.65f, 0), Quaternion.identity);
+            Destroy(thing, 0.5f);
             dashReadyOutline.SetActive(false);
             rb.AddForce(dashDir * dashPower * dashPowerModifier, ForceMode.Impulse);
             dashCd = dashCooldown;

@@ -1,4 +1,4 @@
-Shader "Very Cool Shader"
+Shader"My Shaders/Very Cool Shader"
 {
     Properties
     {

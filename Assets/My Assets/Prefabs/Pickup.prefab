@@ -171,14 +171,20 @@ MonoBehaviour:
   - {fileID: 7053385775836331393, guid: 04a6586d49da3c6408dafa459ae88a09, type: 3}
   - {fileID: 7131401307255788800, guid: 9c1bd5c62e317b444ba71331ce9f5fa4, type: 3}
   - {fileID: 882435891557569105, guid: 31aafa0172ad5e64c99b86b81aca22c6, type: 3}
+  dissapearEffect:
+  - {fileID: 2944396702758532163, guid: f2027eb5556a3dc468cada26c8172f48, type: 3}
+  - {fileID: 2944396702758532163, guid: 930a097645cc3764a80d995422068d58, type: 3}
+  - {fileID: 4535006216103734310, guid: 26469dbaf74636840b8fcf424438f032, type: 3}
+  - {fileID: 2965222256817593503, guid: 03471fba6b78e554e92b3cde600c7993, type: 3}
+  - {fileID: 6823302871133167919, guid: 6cbd0aed578e1ab44bd99b7288388f7c, type: 3}
   duration: 8
   damageModifier: 1.5
   fireRateModifier: 2
   knockbackModifier: 1.25
   bulletKnockbackModifier: 1.5
-  speedModifier: 1.35
-  jumpModifier: 1.35
-  dashPowerModifier: 1.35
+  speedModifier: 1.25
+  jumpModifier: 1.25
+  dashPowerModifier: 1.25
   healAmount: 5
   particlesOffset: {x: 0, y: -1.5, z: 0}
   maxFallSpeed: -15
@@ -188,3 +194,5 @@ MonoBehaviour:
   maxVolume: 1
   minPitch: 0.5
   maxPitch: 1.5
+  pm1: {fileID: 0}
+  pm2: {fileID: 0}

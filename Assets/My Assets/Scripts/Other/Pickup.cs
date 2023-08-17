@@ -8,6 +8,7 @@ public class Pickup : MonoBehaviour
     [SerializeField] Material[] materials;
     [SerializeField] Material[] outlineColours;
     [SerializeField] GameObject[] effect;
+    [SerializeField] GameObject[] dissapearEffect;
 
     [Space]
 
@@ -254,6 +255,8 @@ public class Pickup : MonoBehaviour
         Destroy(particles);
         particlesSystem = null;
         col.enabled = false;
+        GameObject thing = Instantiate(dissapearEffect[pickupNum], transform.position, Quaternion.identity);
+        Destroy(thing, 1);
         yield return new WaitForSeconds(duration);
         switch (pickupNum)
         {
@@ -360,6 +363,8 @@ public class Pickup : MonoBehaviour
         Destroy(particles);
         particlesSystem = null;
         col.enabled = false;
+        GameObject thing = Instantiate(dissapearEffect[pickupNum], transform.position, Quaternion.identity);
+        Destroy(thing, 1);
         yield return new WaitForSeconds(duration);
         if (num == 1)
         {
@@ -400,6 +405,8 @@ public class Pickup : MonoBehaviour
         Destroy(particles);
         particlesSystem = null;
         col.enabled = false;
+        GameObject thing = Instantiate(dissapearEffect[pickupNum], transform.position, Quaternion.identity);
+        Destroy(thing, 1);
         yield return new WaitForSeconds(duration);
         Destroy(gameObject);
     }

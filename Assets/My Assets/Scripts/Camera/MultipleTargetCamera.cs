@@ -5,6 +5,7 @@ public class MultipleTargetCamera : MonoBehaviour
     [SerializeField] Transform[] targets;
     [SerializeField] Vector3 followOffset;
     [SerializeField] float smoothSpeed, fovZoomSpeed, minZoom, maxZoom, zoomLimiter, minHeight, maxHeight;
+    [SerializeField] Material[] skyboxes;
     Camera cam;
 
     [Space]
@@ -16,6 +17,7 @@ public class MultipleTargetCamera : MonoBehaviour
     void Start()
     {
         cam = GetComponent<Camera>();
+        RenderSettings.skybox = skyboxes[Random.Range(0, skyboxes.Length)];
     }
 
     void LateUpdate()

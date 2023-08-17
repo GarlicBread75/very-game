@@ -291,7 +291,7 @@ Material:
     - _RimStep: 0
     - _RimStepSmooth: 0
     - _SSRefractionProjectionModel: 0
-    - _ShadowStep: 0.45
+    - _ShadowStep: 0.4
     - _ShadowStepSmooth: 0.5
     - _Shininess: 0
     - _Smoothness: 0
@@ -304,8 +304,8 @@ Material:
     - _SpecularAAThreshold: 0.2
     - _SpecularHighlights: 0
     - _SpecularOcclusionMode: 1
-    - _SpecularStep: 0.25
-    - _SpecularStepSmooth: 1
+    - _SpecularStep: 0
+    - _SpecularStepSmooth: 0
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _StencilRef: 0
@@ -346,7 +346,7 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.9411765, g: 0.8627451, b: 0.78431374, a: 1}
+    - _BaseColor: {r: 0.9622642, g: 0.81601995, b: 0.6754005, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
