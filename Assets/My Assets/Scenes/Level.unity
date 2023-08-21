@@ -1237,7 +1237,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 325298293}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -2432090755550338912, guid: d9d08e3474e0965459f8e2dbd77c4fdd, type: 3}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -2233,37 +2233,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map:
-  - {fileID: 2800000, guid: 11387ecba89c7154f83d36354f238db7, type: 3}
-  - {fileID: 2800000, guid: 17d2b8d995640dc44b2f4b2c8150cad2, type: 3}
-  - {fileID: 2800000, guid: f774f3140cdb41d4abe4f2ad76290767, type: 3}
-  - {fileID: 2800000, guid: f6aa92dea1eb19a46ac7f79873429fba, type: 3}
-  - {fileID: 2800000, guid: bb4895683643eeb48a2eaa924ce8a80d, type: 3}
-  - {fileID: 2800000, guid: d49c29c91bcbedb409b4a8ab229dbfbf, type: 3}
   - {fileID: 2800000, guid: fb2576b355cd168499dac30ac5b7c7c8, type: 3}
-  - {fileID: 2800000, guid: 83ecf74d9780ed349b7f998909d6e113, type: 3}
-  - {fileID: 2800000, guid: 18efd0a6bf0834c4399a748bd6f1bc2b, type: 3}
-  - {fileID: 2800000, guid: fb8934f1c560f044cb735ec6cb5b5829, type: 3}
-  - {fileID: 2800000, guid: 23316cd79b45f414abbbde3a1acc1064, type: 3}
-  - {fileID: 2800000, guid: e9e6830c5c0ec164b8bb05cc8ada61f1, type: 3}
-  - {fileID: 2800000, guid: eab80fad2bfbc3e49b7eddb4215940c6, type: 3}
-  - {fileID: 2800000, guid: bd9592557a4ce8943abf76adbc680d13, type: 3}
-  - {fileID: 2800000, guid: f0a6f3f0cfd21214b828256920a32a35, type: 3}
-  - {fileID: 2800000, guid: 1aa5ace29bd956849ad1fd6b20bba87f, type: 3}
-  - {fileID: 2800000, guid: 18b300b2a6fef6b4992bd506a5ea43a1, type: 3}
-  - {fileID: 2800000, guid: db22ccf7772868b4cbf55996414332fd, type: 3}
-  - {fileID: 2800000, guid: 60e19b8981da1d449811681ee7d3b264, type: 3}
-  - {fileID: 2800000, guid: e64b75e00be7ab944a8303713952be9b, type: 3}
-  - {fileID: 2800000, guid: 1181a9665e015aa4c96b25008993ccf1, type: 3}
-  - {fileID: 2800000, guid: 9bcd2cf84932afc4cb5230b41adb5fd2, type: 3}
-  - {fileID: 2800000, guid: acff4bab437151f4a8a0789c8ba6557d, type: 3}
   mappings:
   - name: Crate
     colour: {r: 0.78431374, g: 0.39215687, b: 0, a: 1}
-    objectToSpawn: {fileID: 225076401862046998, guid: 512fe6f6646636a4f94a9704b4bfd464,
+    objectToSpawn: {fileID: 847821589921723567, guid: 7c1b10f6a120fce4cba555db8648f7ff,
       type: 3}
   - name: Stone
     colour: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
-    objectToSpawn: {fileID: 225076401862046998, guid: 3f1c5de03ed41774b8a5a06fcfcb4122,
+    objectToSpawn: {fileID: 847821589921723567, guid: 44b156df938aec24b8aad0b45fcb11fc,
       type: 3}
   - name: Snow
     colour: {r: 0.78431374, g: 1, b: 1, a: 1}
@@ -2581,7 +2559,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &832575518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2833,7 +2811,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1134747466}
-  - component: {fileID: 1134747468}
   - component: {fileID: 1134747467}
   - component: {fileID: 1134747469}
   - component: {fileID: 1134747470}
@@ -2898,19 +2875,6 @@ MonoBehaviour:
   o2: {fileID: 0}
   gun1: {fileID: 0}
   gun2: {fileID: 0}
---- !u!114 &1134747468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1134747465}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f3d03eca2764ce43bd6505de150de72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxFps: 60
 --- !u!82 &1134747469
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3202,7 +3166,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 126
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1300214042
 Transform:
@@ -3214,7 +3178,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1896333574}
@@ -3239,7 +3203,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5d7cbac340a499b4ab257e83a554c61c, type: 2}
+  - {fileID: 2100000, guid: 581dc5b6ff1b37b48bedacabc02cd07d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3268,7 +3232,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1300214041}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -2432090755550338912, guid: cabd73104beeb12439ed21b68136335c, type: 3}
 --- !u!43 &1307561237
 Mesh:
   m_ObjectHideFlags: 0
@@ -5955,7 +5919,7 @@ MonoBehaviour:
   dashSound: {fileID: 1896333584}
   minVolume: 0.75
   maxVolume: 1
-  minPitch: 0.5
+  minPitch: 0.75
   maxPitch: 1.5
   speedModifier: 1
   jumpModifier: 1
@@ -6057,7 +6021,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1896333573}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -2432090755550338912, guid: d9d08e3474e0965459f8e2dbd77c4fdd, type: 3}
 --- !u!82 &1896333582
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6780,7 +6744,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1896333574}
   smoothSpeed: 25
-  offset: {x: 0, y: 0.25, z: -1}
+  offset: {x: 0, y: 0.25, z: -1.25}
 --- !u!1 &2079755076
 GameObject:
   m_ObjectHideFlags: 0
@@ -7324,7 +7288,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8106574423207485855}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -2432090755550338912, guid: cabd73104beeb12439ed21b68136335c, type: 3}
 --- !u!23 &3880149621137977291
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7399,7 +7363,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7862884684177282901}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -2432090755550338912, guid: d9d08e3474e0965459f8e2dbd77c4fdd, type: 3}
 --- !u!4 &4339385154363050310
 Transform:
   m_ObjectHideFlags: 0
@@ -7410,7 +7374,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6742104263973404962}
@@ -8038,7 +8002,7 @@ MonoBehaviour:
   rotSpeed: 17.5
   jumpSound: {fileID: 4619794976372809953}
   dashSound: {fileID: 7025539694944329698}
-  minVolume: 0.7
+  minVolume: 0.75
   maxVolume: 1
   minPitch: 0.75
   maxPitch: 1.5
@@ -8065,7 +8029,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5d7cbac340a499b4ab257e83a554c61c, type: 2}
+  - {fileID: 2100000, guid: 581dc5b6ff1b37b48bedacabc02cd07d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8338,7 +8302,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 566916158293756732}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -2432090755550338912, guid: d9d08e3474e0965459f8e2dbd77c4fdd, type: 3}
 --- !u!82 &7025539694944329698
 AudioSource:
   m_ObjectHideFlags: 0
@@ -8966,7 +8930,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 126
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8137049052712922154
 Transform:
@@ -9057,7 +9021,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 6742104263973404962}
   smoothSpeed: 25
-  offset: {x: 0, y: 0.25, z: -1}
+  offset: {x: 0, y: 0.25, z: -1.25}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

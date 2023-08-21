@@ -11,7 +11,7 @@ public class TransitionThing : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    public void ChangeScene()
+    public void Invoke()
     {
         eventThingy.Invoke();
     }

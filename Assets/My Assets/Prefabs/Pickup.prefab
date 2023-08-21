@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ad44b137847f51b4d901096316ecc708, type: 2}
+  - {fileID: 2100000, guid: f12cf268892050b4da1935855baa3f6f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -161,10 +161,10 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 8f3c2161d4309fe49a541cdb3ea6d185, type: 2}
   - {fileID: 2100000, guid: 6ae85e7b0e0a8064b8bee774709a939c, type: 2}
   outlineColours:
-  - {fileID: 2100000, guid: 13645f1c23624204eaf0ad78525ccea1, type: 2}
-  - {fileID: 2100000, guid: c50eab86fb4203c4b81722449a8c27c4, type: 2}
-  - {fileID: 2100000, guid: d072255970fee9f4ba4ac5ce6895adf7, type: 2}
-  - {fileID: 2100000, guid: 5d7cbac340a499b4ab257e83a554c61c, type: 2}
+  - {fileID: 2100000, guid: cc559cc7315fdba458c0c7bc4372e279, type: 2}
+  - {fileID: 2100000, guid: 8dbf5c5d183be3e4085b8eb5b1a27a57, type: 2}
+  - {fileID: 2100000, guid: 386a24133d078e84ca1c13823e5d536d, type: 2}
+  - {fileID: 2100000, guid: 581dc5b6ff1b37b48bedacabc02cd07d, type: 2}
   effect:
   - {fileID: 7155335147208632822, guid: f1d59136f35bcc4459a28bb15bb8502e, type: 3}
   - {fileID: 7155335147208632822, guid: 661b0532ea37d1744b7a03f2ced77bc2, type: 3}
@@ -177,7 +177,7 @@ MonoBehaviour:
   - {fileID: 4535006216103734310, guid: 26469dbaf74636840b8fcf424438f032, type: 3}
   - {fileID: 2965222256817593503, guid: 03471fba6b78e554e92b3cde600c7993, type: 3}
   - {fileID: 6823302871133167919, guid: 6cbd0aed578e1ab44bd99b7288388f7c, type: 3}
-  duration: 8
+  duration: 7.5
   damageModifier: 1.5
   fireRateModifier: 2
   knockbackModifier: 1.25
