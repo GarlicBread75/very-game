@@ -62,11 +62,11 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        dashCd = dashCooldown;
         if (menu)
         {
             return;
         }
+        dashCd = dashCooldown;
         hp = GetComponent<Health>();
         speedModifier = 1;
         jumpModifier = 1;
@@ -88,19 +88,25 @@ public class PlayerMovement : MonoBehaviour
         }
 
         PlayerInput();
+        moveDir = new Vector3(inputX, 0, 0).normalized;
 
         if (Input.GetKey(up) && canJump)
         {
             jumpPressed = true;
         }
+        
+        if (menu)
+        {
+            return;
+        }
+
+        dashDir = new Vector3(inputX, inputY, 0).normalized;
 
         if (Input.GetKeyDown(dashKey) && dashCd <= 0 && dashDir != Vector3.zero)
         {
             dashPressed = true;
         }
 
-        moveDir = new Vector3(inputX, 0, 0).normalized;
-        dashDir = new Vector3(inputX, inputY, 0).normalized;
     }
 
     void FixedUpdate()
@@ -115,6 +121,20 @@ public class PlayerMovement : MonoBehaviour
 
         rb.AddForce(moveDir * acceleration * speedModifier, ForceMode.Force);
 
+        if (jumpPressed)
+        {
+            jumpPressed = false;
+            PlaySound(jumpSound);
+            GameObject thing = Instantiate(jumpDust, transform.position - new Vector3(0, 0.65f, 0), Quaternion.identity);
+            Destroy(thing, 0.5f);
+            rb.velocity = new Vector3(rb.velocity.x, jumpForce * jumpModifier, 0);
+        }
+
+        if (menu)
+        {
+            return;
+        }
+
         if (dashCd > 0)
         {
             dashCd -= Time.fixedDeltaTime;
@@ -127,15 +147,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (jumpPressed)
-        {
-            jumpPressed = false;
-            PlaySound(jumpSound);
-            GameObject thing = Instantiate(jumpDust, transform.position - new Vector3(0, 0.65f, 0), Quaternion.identity);
-            Destroy(thing, 0.5f);
-            rb.velocity = new Vector3(rb.velocity.x, jumpForce * jumpModifier, 0);
-        }
-
         if (dashPressed)
         {
             dashPressed = false;
@@ -145,11 +156,6 @@ public class PlayerMovement : MonoBehaviour
             dashReadyOutline.SetActive(false);
             rb.AddForce(dashDir * dashPower * dashPowerModifier, ForceMode.Impulse);
             dashCd = dashCooldown;
-        }
-
-        if (menu)
-        {
-            return;
         }
         GunRotation();
     }

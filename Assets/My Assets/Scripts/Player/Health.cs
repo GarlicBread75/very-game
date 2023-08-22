@@ -19,6 +19,7 @@ public class Health : MonoBehaviour
     [HideInInspector] public bool dead;
     [HideInInspector] public bool victory;
     [HideInInspector] public bool hit;
+    BoxCollider col;
 
     [Space]
 
@@ -45,26 +46,20 @@ public class Health : MonoBehaviour
     [SerializeField] float minVolume, maxVolume, minPitch, maxPitch;
     #endregion
 
-    void Start()
+    void Awake()
     {
+        blinkCd = Random.Range(minBlinkCooldown, maxBlinkCooldown);
+
         if (menu)
         {
             return;
         }
-        
+
+        col = GetComponent<BoxCollider>();
         rend = GetComponent<MeshRenderer>();
         currentHp = maxHp;
         hpSlider.maxValue = maxHp;
         hpSlider.value = currentHp;
-    }
-
-    void Awake()
-    {
-        blinkCd = Random.Range(minBlinkCooldown, maxBlinkCooldown);
-        if (menu)
-        {
-            return;
-        }
 
         otherPlayer = GameObject.Find(otherPlayerName).GetComponent<Health>();
         hitBlinkCd = hitBlinkDelay;
@@ -198,7 +193,7 @@ public class Health : MonoBehaviour
 
     #endregion
 
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Void") && !menu)
         {
@@ -209,8 +204,12 @@ public class Health : MonoBehaviour
     void Die()
     {
         PlaySound(deathSound);
-        GameObject effect = Instantiate(deathEffect, transform.position, Quaternion.identity);
-        Destroy(effect, 3f);
+        GameObject effect;
+        if (transform.position.y > -2)
+        {
+            effect = Instantiate(deathEffect, transform.position, Quaternion.identity);
+            Destroy(effect, 3f);
+        }
         rend.material = deadMaterial;
         onDeath.Invoke();
         dead = true;

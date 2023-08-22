@@ -111,7 +111,8 @@ public class Pickup : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Void"))
         {
-            Dissapear();
+            Invoke("Dissapear", 5);
+            return;
         }
 
         if (collision.gameObject.CompareTag("Player 1"))

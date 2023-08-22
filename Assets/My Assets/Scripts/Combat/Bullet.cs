@@ -21,9 +21,9 @@ public class Bullet : MonoBehaviour
         }
         else
         {
-            if (collision.gameObject.CompareTag("Pickup"))
+            if (collision.gameObject.CompareTag("Pickup") || collision.gameObject.CompareTag("Ground"))
             {
-                collision.GetComponent<Rigidbody>().AddForce(transform.right * knockback, ForceMode.Impulse);
+                collision.GetComponent<Rigidbody>().AddForce(transform.right * knockback * 1.25f, ForceMode.Impulse);
             }
         }
         GameObject effect = Instantiate(hitEffect, transform.position,Quaternion.identity);
