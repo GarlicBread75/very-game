@@ -344,8 +344,8 @@ public class Pickup : MonoBehaviour
         if (num == 2)
         {
             spawner.movementActive2 = true;
-            o1.material = outlineColours[pickupNum];
-            o1.enabled = true;
+            o2.material = outlineColours[pickupNum];
+            o2.enabled = true;
         }
 
         PlaySound(buffSound);

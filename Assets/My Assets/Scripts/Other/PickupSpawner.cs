@@ -8,11 +8,15 @@ public class PickupSpawner : MonoBehaviour
     public AudioSource healSound, buffSound;
     [HideInInspector] public bool damageActive1, fireRateActive1, knockbackActive1, movementActive1, damageActive2, fireRateActive2, knockbackActive2, movementActive2;
     float cd;
-    [HideInInspector] public Health hp1, hp2;
-    [HideInInspector] public PlayerMovement pm1, pm2;
-    [HideInInspector] public GameObject p1, p2, angry1, angry2;
-    [HideInInspector] public MeshRenderer o1, o2;
-    [HideInInspector] public Gun gun1, gun2;
+
+    [Space]
+
+    public Health hp1;
+    public Health hp2;
+    public PlayerMovement pm1, pm2;
+    public GameObject p1, p2, angry1, angry2;
+    public MeshRenderer o1, o2;
+    public Gun gun1, gun2;
 
     void Awake()
     {
