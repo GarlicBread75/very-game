@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] string targetTag;
+    public string targetTag;
     [SerializeField] GameObject hitEffect;
     public AudioSource impactSound;
     [SerializeField] float minVolume, maxVolume, minPitch, maxPitch;

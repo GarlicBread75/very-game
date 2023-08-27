@@ -21,7 +21,7 @@ public class PickupSpawner : MonoBehaviour
     void Awake()
     {
         cd = Random.Range(minSpawnDelay, maxSpawnDelay);
-        Invoke("GetPlayerComponents", 0.1f);
+        Invoke("GetPlayerComponents", 0.5f);
     }
 
     void FixedUpdate()
@@ -45,13 +45,15 @@ public class PickupSpawner : MonoBehaviour
         hp2 = p2.GetComponent<Health>();
         pm1 = p1.GetComponent<PlayerMovement>();
         pm2 = p2.GetComponent<PlayerMovement>();
-        gun1 = GameObject.Find("Gun 1").GetComponent<Gun>();
-        gun2 = GameObject.Find("Gun 2").GetComponent<Gun>();
+        gun1 = GameObject.FindGameObjectWithTag("Gun 1").GetComponent<Gun>();
+        gun2 = GameObject.FindGameObjectWithTag("Gun 2").GetComponent<Gun>();
         o1 = GameObject.Find("Outline 1").GetComponent<MeshRenderer>();
         o2 = GameObject.Find("Outline 2").GetComponent<MeshRenderer>();
         angry1 = GameObject.Find("Angry 1");
+        angry1.GetComponent<MeshRenderer>().enabled = true;
         angry1.SetActive(false);
         angry2 = GameObject.Find("Angry 2");
+        angry2.GetComponent<MeshRenderer>().enabled = true;
         angry2.SetActive(false);
     }
 }

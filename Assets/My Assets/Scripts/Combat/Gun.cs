@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class Gun : MonoBehaviour
 {
     #region Variables
-    [SerializeField] Health hp;
+    public Health hp;
 
     [Header("Gun")]
     [SerializeField] Transform firePoint;
@@ -14,7 +14,8 @@ public class Gun : MonoBehaviour
     [SerializeField] float spread;
     public float fireRate;
     [SerializeField] bool automatic;
-    [SerializeField] KeyCode shootKey;
+    [SerializeField] int gunNum;
+    public KeyCode shootKey;
     bool shootPressed, atkPressed, shooting;
     float shootCd;
     [HideInInspector] public float fireRateModifier, damageModifier, knockbackModifier, bulletKnockbackModifier;
@@ -38,18 +39,15 @@ public class Gun : MonoBehaviour
     [Space]
 
     [Header("Knockback")]
-    [SerializeField] Rigidbody player;
-    [SerializeField] float knockback;
-    [SerializeField] float bulletKnockback;
+    public Rigidbody player;
+    [SerializeField] float knockback, bulletKnockback;
 
     [Space]
 
     [Header("Gun Cooldown Slider")]
     public Slider slider;
-    public Gradient gradient1;
-    public Gradient gradient2;
-    [SerializeField] Image fill;
-    [SerializeField] Image background;
+    public Gradient gradient1, gradient2;
+    public Image fill, background;
     [HideInInspector] public Gradient gr;
 
     [Space]
@@ -138,10 +136,19 @@ public class Gun : MonoBehaviour
         {
             GameObject shotBullet = Instantiate(bullet, firePoint.position, firePoint.rotation);
             Bullet bulllet = shotBullet.GetComponent<Bullet>();
+            if (gunNum == 1)
+            {
+                bulllet.targetTag = "Player 2";
+            }
+            else
+            if (gunNum == 2)
+            {
+                bulllet.targetTag = "Player 1";
+            }
             bulllet.SetStats(damage * damageModifier, bulletKnockback * bulletKnockbackModifier);
             bulllet.impactSound = bulletImpactSound;
-            Vector2 dir = transform.rotation * Vector2.right;
-            Vector2 pDir = Vector2.Perpendicular(dir) * Random.Range(-spread, spread);
+            Vector3 dir = transform.rotation * Vector3.forward;
+            Vector3 pDir = Vector2.Perpendicular(dir) * Random.Range(-spread, spread);
             shotBullet.GetComponent<Rigidbody>().velocity = (dir + pDir) * Random.Range(minSpeed, maxSpeed);
             if (timeToDestroy != 0)
             {

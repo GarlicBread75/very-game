@@ -7,9 +7,8 @@ public class Customization : MonoBehaviour
     #region Variables
     [SerializeField] Material mat, deadMat;
     [SerializeField] TextMeshProUGUI text;
-    [SerializeField] Image list, image;
+    [SerializeField] Image list, image, sat, val;
     [SerializeField] Gradient gradient;
-    [SerializeField] UIGradient saturationGradient, valueGradient;
     [SerializeField] bool eye;
     [SerializeField] string nameExtension;
 
@@ -19,7 +18,6 @@ public class Customization : MonoBehaviour
 
     GradientColorKey[] colourKeys = new GradientColorKey[2];
     GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
-    int hueNum;
     #endregion
 
     void Start()
@@ -47,12 +45,12 @@ public class Customization : MonoBehaviour
         image.color = gradient.Evaluate(1);
         text.color = gradient.Evaluate(0.25f);
         list.color = gradient.Evaluate(0.1f);
+        sat.color = gradient.Evaluate(1);
+        val.color = Color.HSVToRGB(hue.value, saturation.value, 1);
 
         if (!eye)
         {
             deadMat.SetColor("_BaseColor", gradient.Evaluate(0.5f));
-            saturationGradient.thing1 = gradient.Evaluate(0.99f);
-            valueGradient.m_color2 = gradient.Evaluate(1);
         }
         SaveData();
     }

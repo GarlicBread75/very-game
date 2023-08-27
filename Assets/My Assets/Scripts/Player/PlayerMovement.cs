@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] string otherPlayerTag;
     [SerializeField] GameObject jumpDust;
+    [SerializeField] LayerMask ground;
+    [SerializeField] float distance;
     bool canJump, jumpPressed;
 
     [Space]
@@ -44,7 +46,9 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Gun")]
     [SerializeField] Transform gunHolder;
+    [SerializeField] Transform gun;
     [SerializeField] float rotSpeed;
+    int gunRotZ, gunHolderRotZ;
 
     [Space]
 
@@ -52,8 +56,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] AudioSource jumpSound;
     [SerializeField] AudioSource dashSound;
     [SerializeField] float minVolume, maxVolume, minPitch, maxPitch;
-
-    int rot;
+    BoxCollider col;
 
     [HideInInspector] public float speedModifier, jumpModifier, dashPowerModifier;
 
@@ -62,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        col = GetComponent<BoxCollider>();
         if (menu)
         {
             return;
@@ -73,8 +77,9 @@ public class PlayerMovement : MonoBehaviour
         dashPowerModifier = 1;
         if (gameObject.name == "Body 2")
         {
-            rot = 180;
+            gunHolderRotZ = 180;
         }
+        gun.localRotation = Quaternion.Euler(new Vector3(0, 90, 0));
     }
 
     void Update()
@@ -157,6 +162,7 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(dashDir * dashPower * dashPowerModifier, ForceMode.Impulse);
             dashCd = dashCooldown;
         }
+
         GunRotation();
     }
 
@@ -209,55 +215,68 @@ public class PlayerMovement : MonoBehaviour
 
     void GunRotation()
     {
-        if (inputX == 1)
+        switch (inputX)
         {
-            if (inputY == 0)
-            {
-                rot = 0;
-            }
-            else
-            if (inputY == 1)
-            {
-                rot = 45;
-            }
-            else
-            if (inputY == -1)
-            {
-                rot = 315;
-            }
+            case -1:
+                switch (inputY)
+                {
+                    case -1:
+                        gunHolderRotZ = 225;
+                        gunRotZ = 180;
+                        break;
+
+                    case 0:
+                        gunHolderRotZ = 180;
+                        gunRotZ = 180;
+                        break;
+
+                    case 1:
+                        gunHolderRotZ = 135;
+                        gunRotZ = 180;
+                        break;
+                }
+                break;
+
+            case 0:
+                switch (inputY)
+                {
+                    case -1:
+                        gunHolderRotZ = 270;
+                        break;
+
+                    case 1:
+                        gunHolderRotZ = 90;
+                        break;
+                }
+                break;
+
+            case 1:
+                switch (inputY)
+                {
+                    case -1:
+                        gunHolderRotZ = 315;
+                        gunRotZ = 0;
+                        break;
+
+                    case 0:
+                        gunHolderRotZ = 0;
+                        gunRotZ = 0;
+                        break;
+
+                    case 1:
+                        gunHolderRotZ = 45;
+                        gunRotZ = 0;
+                        break;
+                }
+                break;
         }
-        else
-        if (inputX == -1)
-        {
-            if (inputY == 0)
-            {
-                rot = 180;
-            }
-            else
-            if (inputY == 1)
-            {
-                rot = 135;
-            }
-            else
-            if (inputY == -1)
-            {
-                rot = 225;
-            }
-        }
-        else
-        if (inputX == 0)
-        {
-            if (inputY == 1)
-            {
-                rot = 90;
-            }
-            else
-            if (inputY == -1)
-            {
-                rot = 270;
-            }
-        }
-        gunHolder.rotation = Quaternion.Lerp(gunHolder.rotation, Quaternion.Euler(new Vector3(0, 0, rot)), rotSpeed * Time.deltaTime);
+        gunHolder.rotation = Quaternion.Lerp(gunHolder.rotation, Quaternion.Euler(new Vector3(0, 0, gunHolderRotZ)), rotSpeed * Time.deltaTime);
+        gun.localRotation = Quaternion.Euler(new Vector3(0, 90, gunRotZ));
+    }
+
+    bool Grounded()
+    {
+        return Physics.BoxCast(transform.position, col.bounds.extents, Vector3.down, transform.rotation, distance, ground);
     }
 
     void PlaySound(AudioSource source)
