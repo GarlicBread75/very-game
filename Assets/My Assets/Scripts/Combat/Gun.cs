@@ -15,7 +15,7 @@ public class Gun : MonoBehaviour
     public float fireRate;
     [SerializeField] bool automatic;
     [SerializeField] int gunNum;
-    public KeyCode shootKey;
+    public KeyBinding shootKey;
     bool shootPressed, atkPressed, shooting;
     float shootCd;
     [HideInInspector] public float fireRateModifier, damageModifier, knockbackModifier, bulletKnockbackModifier;
@@ -77,11 +77,11 @@ public class Gun : MonoBehaviour
 
         if (automatic)
         {
-            shootPressed = Input.GetKey(shootKey);
+            shootPressed = Input.GetKey(shootKey.keyCode);
         }
         else
         {
-            shootPressed = Input.GetKeyDown(shootKey);
+            shootPressed = Input.GetKeyDown(shootKey.keyCode);
         }
 
         if (shootCd < fireRate / fireRateModifier)

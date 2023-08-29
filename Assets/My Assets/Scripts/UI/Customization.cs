@@ -46,6 +46,7 @@ public class Customization : MonoBehaviour
         text.color = gradient.Evaluate(0.25f);
         list.color = gradient.Evaluate(0.1f);
         sat.color = gradient.Evaluate(1);
+        sat.color = Color.HSVToRGB(hue.value, 1, value.value);
         val.color = Color.HSVToRGB(hue.value, saturation.value, 1);
 
         if (!eye)

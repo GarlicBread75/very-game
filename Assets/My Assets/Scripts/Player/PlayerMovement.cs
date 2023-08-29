@@ -36,11 +36,7 @@ public class PlayerMovement : MonoBehaviour
     [Space]
 
     [Header("KeyBinds")]
-    [SerializeField] KeyCode up;
-    [SerializeField] KeyCode down;
-    [SerializeField] KeyCode left;
-    [SerializeField] KeyCode right;
-    [SerializeField] KeyCode dashKey;
+    [SerializeField] KeyBinding[] keys;
 
     [Space]
 
@@ -78,8 +74,8 @@ public class PlayerMovement : MonoBehaviour
         if (gameObject.name == "Body 2")
         {
             gunHolderRotZ = 180;
+            gunRotZ = 180;
         }
-        gun.localRotation = Quaternion.Euler(new Vector3(0, 90, 0));
     }
 
     void Update()
@@ -95,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
         PlayerInput();
         moveDir = new Vector3(inputX, 0, 0).normalized;
 
-        if (Input.GetKey(up) && canJump)
+        if (Input.GetKey(keys[0].keyCode) && canJump)
         {
             jumpPressed = true;
         }
@@ -107,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
 
         dashDir = new Vector3(inputX, inputY, 0).normalized;
 
-        if (Input.GetKeyDown(dashKey) && dashCd <= 0 && dashDir != Vector3.zero)
+        if (Input.GetKeyDown(keys[4].keyCode) && dashCd <= 0 && dashDir != Vector3.zero)
         {
             dashPressed = true;
         }
@@ -184,12 +180,12 @@ public class PlayerMovement : MonoBehaviour
 
     void PlayerInput()
     {
-        if (Input.GetKey(up))
+        if (Input.GetKey(keys[0].keyCode))
         {
             inputY = 1;
         }
         else
-        if (Input.GetKey(down))
+        if (Input.GetKey(keys[1].keyCode))
         {
             inputY = -1;
         }
@@ -198,12 +194,12 @@ public class PlayerMovement : MonoBehaviour
             inputY = 0;
         }
 
-        if (Input.GetKey(right))
+        if (Input.GetKey(keys[3].keyCode))
         {
             inputX = 1;
         }
         else
-        if (Input.GetKey(left))
+        if (Input.GetKey(keys[2].keyCode))
         {
             inputX = -1;
         }
