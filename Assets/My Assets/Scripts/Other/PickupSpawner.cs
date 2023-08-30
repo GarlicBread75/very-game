@@ -45,8 +45,23 @@ public class PickupSpawner : MonoBehaviour
         hp2 = p2.GetComponent<Health>();
         pm1 = p1.GetComponent<PlayerMovement>();
         pm2 = p2.GetComponent<PlayerMovement>();
-        gun1 = GameObject.FindGameObjectWithTag("Gun 1").GetComponent<Gun>();
-        gun2 = GameObject.FindGameObjectWithTag("Gun 2").GetComponent<Gun>();
+
+        foreach (GameObject thing in GameObject.FindGameObjectsWithTag("Gun 1"))
+        {
+            if (thing.activeInHierarchy)
+            {
+                gun1 = thing.GetComponent<Gun>();
+            }
+        }
+
+        foreach (GameObject thing in GameObject.FindGameObjectsWithTag("Gun 2"))
+        {
+            if (thing.activeInHierarchy)
+            {
+                gun2 = thing.GetComponent<Gun>();
+            }
+        }
+
         o1 = GameObject.Find("Outline 1").GetComponent<MeshRenderer>();
         o2 = GameObject.Find("Outline 2").GetComponent<MeshRenderer>();
         angry1 = GameObject.Find("Angry 1");

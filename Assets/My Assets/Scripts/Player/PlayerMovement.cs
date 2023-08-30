@@ -41,10 +41,10 @@ public class PlayerMovement : MonoBehaviour
     [Space]
 
     [Header("Gun")]
-    [SerializeField] Transform gunHolder;
-    [SerializeField] Transform gun;
+    [SerializeField] Transform gunHolderTransform;
+    [SerializeField] Transform gunTransform;
     [SerializeField] float rotSpeed;
-    int gunRotZ, gunHolderRotZ;
+    int gunRotX, gunHolderRotZ;
 
     [Space]
 
@@ -66,16 +66,21 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        dashCd = dashCooldown;
         hp = GetComponent<Health>();
+        dashCd = dashCooldown;
         speedModifier = 1;
         jumpModifier = 1;
         dashPowerModifier = 1;
         if (gameObject.name == "Body 2")
         {
             gunHolderRotZ = 180;
-            gunRotZ = 180;
+            gunRotX = 180;
         }
+    }
+
+    void Start()
+    {
+        gunTransform = gunHolderTransform.gameObject.GetComponent<GunHolder>().gunTransform;
     }
 
     void Update()
@@ -218,17 +223,17 @@ public class PlayerMovement : MonoBehaviour
                 {
                     case -1:
                         gunHolderRotZ = 225;
-                        gunRotZ = 180;
+                        gunRotX = 180;
                         break;
 
                     case 0:
                         gunHolderRotZ = 180;
-                        gunRotZ = 180;
+                        gunRotX = 180;
                         break;
 
                     case 1:
                         gunHolderRotZ = 135;
-                        gunRotZ = 180;
+                        gunRotX = 180;
                         break;
                 }
                 break;
@@ -251,23 +256,23 @@ public class PlayerMovement : MonoBehaviour
                 {
                     case -1:
                         gunHolderRotZ = 315;
-                        gunRotZ = 0;
+                        gunRotX = 0;
                         break;
 
                     case 0:
                         gunHolderRotZ = 0;
-                        gunRotZ = 0;
+                        gunRotX = 0;
                         break;
 
                     case 1:
                         gunHolderRotZ = 45;
-                        gunRotZ = 0;
+                        gunRotX = 0;
                         break;
                 }
                 break;
         }
-        gunHolder.rotation = Quaternion.Lerp(gunHolder.rotation, Quaternion.Euler(new Vector3(0, 0, gunHolderRotZ)), rotSpeed * Time.deltaTime);
-        gun.localRotation = Quaternion.Euler(new Vector3(0, 90, gunRotZ));
+        gunHolderTransform.rotation = Quaternion.Lerp(gunHolderTransform.rotation, Quaternion.Euler(new Vector3(0, 0, gunHolderRotZ)), rotSpeed * Time.deltaTime);
+        gunTransform.localRotation = Quaternion.Euler(new Vector3(gunRotX, 0, 0));
     }
 
     bool Grounded()
