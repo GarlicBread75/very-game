@@ -138,11 +138,13 @@ public class Gun : MonoBehaviour
             if (gameObject.CompareTag("Gun 1"))
             {
                 bulllet.targetTag = "Player 2";
+                bulllet.notTargetTag = "Player 1";
             }
             else
             if (gameObject.CompareTag("Gun 2"))
             {
                 bulllet.targetTag = "Player 1";
+                bulllet.notTargetTag = "Player 2";
             }
             bulllet.SetStats(damage * damageModifier, bulletKnockback * bulletKnockbackModifier);
             bulllet.impactSound = bulletImpactSound;

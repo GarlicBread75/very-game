@@ -165,6 +165,11 @@ public class Health : MonoBehaviour
             hit = false;
             hitBlinkCd = hitBlinkDelay;
         }
+
+        if (transform.position.x > 50 || transform.position.x < -50 || transform.position.y > 200 || transform.position.y < -15)
+        {
+            currentHp = 0;
+        }
     }
 
     #region Health Methods
@@ -196,6 +201,11 @@ public class Health : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Void") && !menu)
+        {
+            currentHp = 0;
+        }
+        else
+        if ((collision.gameObject.CompareTag("Block Support") || collision.gameObject.CompareTag("Ground")) && collision.transform.position.y < -3)
         {
             currentHp = 0;
         }

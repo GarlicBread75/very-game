@@ -80,6 +80,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        if (menu)
+        {
+            return;
+        }
         gunTransform = gunHolderTransform.gameObject.GetComponent<GunHolder>().gunTransform;
     }
 
@@ -173,11 +177,16 @@ public class PlayerMovement : MonoBehaviour
         {
             canJump = true;
         }
+        else
+        if (collision.gameObject.CompareTag("Block Support") && transform.position.y > collision.transform.position.y && collision.transform.position.y > -3)
+        {
+            canJump = true;
+        }
     }
 
     void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag(otherPlayerTag))
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag(otherPlayerTag) || collision.gameObject.CompareTag("Block Support"))
         {
             canJump = false;
         }

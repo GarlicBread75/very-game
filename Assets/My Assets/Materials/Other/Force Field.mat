@@ -16,7 +16,7 @@ Material:
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 1
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses: []
@@ -102,20 +102,20 @@ Material:
     - _DstBlendAlpha: 0
     - _Edge: 0.175
     - _EnvironmentReflections: 1
-    - _Fill: 0.005
+    - _Fill: 0.025
     - _Fresnel_Power: 5
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Metallic: 1
+    - _Metallic: 0
     - _Metallic_1: 0
     - _Metallic_2: 0
     - _Metallic_3: 0
     - _Metallic_4: 0
     - _OcclusionStrength: 1
-    - _Offset: -1.25
+    - _Offset: 0
     - _Parallax: 0.005
-    - _Power: 5
+    - _Power: 2.5
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
@@ -136,7 +136,7 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Emmision: {r: 0, g: 1.0683575, b: 2.9960785, a: 1}
     - _Fresnel_Colour: {r: 0, g: 0.5882353, b: 1, a: 1}
-    - _Scroll_Speed: {r: 0.75, g: 0.75, b: 0, a: 0}
+    - _Scroll_Speed: {r: 1, g: 1, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _Tilling: {r: 5, g: 5, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -89,6 +89,7 @@ public class Pickup : MonoBehaviour
         {
             particlesOffset.y += 1;
         }
+        Invoke("Dissapear", 30);
     }
 
     void Update()
@@ -107,7 +108,7 @@ public class Pickup : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Void"))
         {
@@ -171,6 +172,8 @@ public class Pickup : MonoBehaviour
 
     void Dissapear()
     {
+        GameObject thing = Instantiate(dissapearEffect[pickupNum], transform.position, Quaternion.identity);
+        Destroy(thing, 1);
         em = particlesSystem.emission;
         em.enabled = false;
         for (int i = 0; i < particles.transform.childCount; i++)

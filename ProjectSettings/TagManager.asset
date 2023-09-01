@@ -12,6 +12,8 @@ TagManager:
   - Player 2
   - Gun 1
   - Gun 2
+  - Wall
+  - Block Support
   layers:
   - Default
   - TransparentFX
@@ -25,8 +27,8 @@ TagManager:
   - Bullet
   - Pickup
   - Ground Support
-  - 
-  - 
+  - Gun
+  - Eye
   - 
   - 
   - 

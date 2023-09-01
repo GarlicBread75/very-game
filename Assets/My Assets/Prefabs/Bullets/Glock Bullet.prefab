@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3590593100825116081}
   - component: {fileID: 3695449419492825640}
   - component: {fileID: 5426292646576392390}
-  - component: {fileID: 3025247131005665724}
   - component: {fileID: 6453658691337901247}
+  - component: {fileID: 3025247131005665724}
   - component: {fileID: 8211091728224868047}
   m_Layer: 9
   m_Name: Glock Bullet
@@ -86,6 +86,29 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &6453658691337901247
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8277969018896164436}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Height: 1.25
+  m_Direction: 0
+  m_Center: {x: 0, y: -0.00125, z: 0}
 --- !u!54 &3025247131005665724
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -113,29 +136,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!136 &6453658691337901247
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8277969018896164436}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.003
-  m_Height: 0.02
-  m_Direction: 1
-  m_Center: {x: 0, y: -0.00125, z: 0}
 --- !u!114 &8211091728224868047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,6 +152,7 @@ MonoBehaviour:
   hitEffect: {fileID: 5373101299431178242, guid: 5cbeb9db413018a41b3a11553a39f238,
     type: 3}
   impactSound: {fileID: 0}
+  destroyTimer: 0.5
   minVolume: 0.25
   maxVolume: 0.75
   minPitch: 0.5

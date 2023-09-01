@@ -14,6 +14,8 @@ public class Menu : MonoBehaviour
         {
             scoreManager.p1Score = 0;
             scoreManager.p2Score = 0;
+            ToKeybinds();
+            ToMain();
         }
     }
 
