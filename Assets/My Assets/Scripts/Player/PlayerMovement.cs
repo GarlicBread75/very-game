@@ -8,9 +8,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float acceleration;
     [SerializeField] bool menu;
     Rigidbody rb;
-    Health hp;
+    [HideInInspector] public Health hp;
     Vector3 moveDir;
-    float inputX, inputY;
+    [HideInInspector] public float inputX, inputY;
 
     [Space]
 
@@ -62,12 +62,12 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         col = GetComponent<BoxCollider>();
+        dashCd = dashCooldown;
         if (menu)
         {
             return;
         }
         hp = GetComponent<Health>();
-        dashCd = dashCooldown;
         speedModifier = 1;
         jumpModifier = 1;
         dashPowerModifier = 1;
@@ -104,11 +104,6 @@ public class PlayerMovement : MonoBehaviour
         {
             jumpPressed = true;
         }
-        
-        if (menu)
-        {
-            return;
-        }
 
         dashDir = new Vector3(inputX, inputY, 0).normalized;
 
@@ -116,7 +111,6 @@ public class PlayerMovement : MonoBehaviour
         {
             dashPressed = true;
         }
-
     }
 
     void FixedUpdate()
@@ -140,11 +134,6 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector3(rb.velocity.x, jumpForce * jumpModifier, 0);
         }
 
-        if (menu)
-        {
-            return;
-        }
-
         if (dashCd > 0)
         {
             dashCd -= Time.fixedDeltaTime;
@@ -166,6 +155,11 @@ public class PlayerMovement : MonoBehaviour
             dashReadyOutline.SetActive(false);
             rb.AddForce(dashDir * dashPower * dashPowerModifier, ForceMode.Impulse);
             dashCd = dashCooldown;
+        }
+
+        if (menu)
+        {
+            return;
         }
 
         GunRotation();
@@ -204,6 +198,11 @@ public class PlayerMovement : MonoBehaviour
             inputY = -1;
         }
         else
+        if (Input.GetKey(keys[0].keyCode) && Input.GetKey(keys[1].keyCode))
+        {
+            inputY = 0;
+        }
+        else
         {
             inputY = 0;
         }
@@ -216,6 +215,11 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(keys[2].keyCode))
         {
             inputX = -1;
+        }
+        else
+        if (Input.GetKey(keys[2].keyCode) && Input.GetKey(keys[3].keyCode))
+        {
+            inputX = 0;
         }
         else
         {

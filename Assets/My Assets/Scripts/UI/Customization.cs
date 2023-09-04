@@ -5,7 +5,7 @@ using TMPro;
 public class Customization : MonoBehaviour
 {
     #region Variables
-    [SerializeField] Material mat, deadMat;
+    [SerializeField] Material mat, deadMat, bullet;
     [SerializeField] TextMeshProUGUI text;
     [SerializeField] Image list, image, sat, val;
     [SerializeField] Gradient gradient;
@@ -52,6 +52,7 @@ public class Customization : MonoBehaviour
         if (!eye)
         {
             deadMat.SetColor("_BaseColor", gradient.Evaluate(0.5f));
+            bullet.SetColor("_OutlineColor", gradient.Evaluate(1));
         }
         SaveData();
     }

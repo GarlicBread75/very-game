@@ -12,12 +12,19 @@ public class MultipleTargetCamera : MonoBehaviour
 
     [SerializeField] bool staticCamera;
     [SerializeField] Vector3 staticPos;
-    [SerializeField] float staticFov;
+    [SerializeField] float staticFov, moveTreshold;
+    int num;
 
     void Start()
     {
         cam = GetComponent<Camera>();
-        RenderSettings.skybox = skyboxes[Random.Range(0, skyboxes.Length)];
+        num = Random.Range(0, skyboxes.Length);
+        RenderSettings.skybox = skyboxes[num];
+
+        if (staticCamera)
+        {
+            cam.fieldOfView = staticFov;
+        }
     }
 
     void LateUpdate()
@@ -39,8 +46,7 @@ public class MultipleTargetCamera : MonoBehaviour
 
         if (staticCamera)
         {
-            transform.position = Vector3.Lerp(transform.position, staticPos, smoothSpeed * Time.deltaTime);
-            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, staticFov, fovZoomSpeed * Time.deltaTime);
+            SmallMovement();
         }
         else
         {
@@ -87,6 +93,13 @@ public class MultipleTargetCamera : MonoBehaviour
         {
             return bounds.size.y;
         }
+    }
+
+    void SmallMovement()
+    {
+        Vector3 pos = GetCenterPoint() + followOffset;
+        Vector3 desiredPos = Vector3.Lerp(staticPos, new Vector3(pos.x, pos.y, staticPos.z), moveTreshold);
+        transform.position = Vector3.Lerp(transform.position, desiredPos, smoothSpeed * Time.deltaTime);
     }
 
     Vector3 GetCenterPoint()

@@ -31,8 +31,6 @@ public class Pickup : MonoBehaviour
     [SerializeField] AudioSource healSound, buffSound;
     [SerializeField] float minVolume, maxVolume, minPitch, maxPitch;
     GameObject particles, angry1, angry2;
-    ParticleSystem.EmissionModule em;
-    ParticleSystem particlesSystem;
     PickupSpawner spawner;
     CapsuleCollider col;
     MeshRenderer rend, o1, o2;
@@ -76,15 +74,6 @@ public class Pickup : MonoBehaviour
         rend = GetComponent<MeshRenderer>();
         rend.material = materials[pickupNum];
         particles = Instantiate(effect[pickupNum], transform.position, Quaternion.identity);
-        particlesSystem = particles.GetComponent<ParticleSystem>();
-        em = particlesSystem.emission;
-        em.enabled = true;
-        for (int i = 0; i < particles.transform.childCount; i++)
-        {
-            em = particles.transform.GetChild(i).GetComponentInChildren<ParticleSystem>().emission;
-            em.enabled = true;
-        }
-        particlesSystem.Play();
         if (pickupNum == 5)
         {
             particlesOffset.y += 1;
@@ -108,7 +97,7 @@ public class Pickup : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider collision)
+    void OnTriggerEnter(Collider collision) 
     {
         if (collision.gameObject.CompareTag("Void"))
         {
@@ -174,16 +163,7 @@ public class Pickup : MonoBehaviour
     {
         GameObject thing = Instantiate(dissapearEffect[pickupNum], transform.position, Quaternion.identity);
         Destroy(thing, 1);
-        em = particlesSystem.emission;
-        em.enabled = false;
-        for (int i = 0; i < particles.transform.childCount; i++)
-        {
-            em = particles.transform.GetChild(i).GetComponentInChildren<ParticleSystem>().emission;
-            em.enabled = false;
-        }
-        particlesSystem.Stop();
         Destroy(particles);
-        particlesSystem = null;
         Destroy(gameObject);
     }
 
@@ -248,16 +228,7 @@ public class Pickup : MonoBehaviour
                 break;
         }
         rend.enabled = false;
-        em = particlesSystem.emission;
-        em.enabled = false;
-        for (int i = 0; i < particles.transform.childCount; i++)
-        {
-            em = particles.transform.GetChild(i).GetComponentInChildren<ParticleSystem>().emission;
-            em.enabled = false;
-        }
-        particlesSystem.Stop();
         Destroy(particles);
-        particlesSystem = null;
         col.enabled = false;
         GameObject thing = Instantiate(dissapearEffect[pickupNum], transform.position, Quaternion.identity);
         Destroy(thing, 1);
@@ -356,16 +327,7 @@ public class Pickup : MonoBehaviour
         player.jumpModifier = jumpModifier;
         player.dashPowerModifier = dashPowerModifier;
         rend.enabled = false;
-        em = particlesSystem.emission;
-        em.enabled = false;
-        for (int i = 0; i < particles.transform.childCount; i++)
-        {
-            em = particles.transform.GetChild(i).GetComponentInChildren<ParticleSystem>().emission;
-            em.enabled = false;
-        }
-        particlesSystem.Stop();
         Destroy(particles);
-        particlesSystem = null;
         col.enabled = false;
         GameObject thing = Instantiate(dissapearEffect[pickupNum], transform.position, Quaternion.identity);
         Destroy(thing, 1);
@@ -398,16 +360,7 @@ public class Pickup : MonoBehaviour
         PlaySound(healSound);
         hp.Heal(healAmount);
         rend.enabled = false;
-        em = particlesSystem.emission;
-        em.enabled = false;
-        for (int i = 0; i < particles.transform.childCount; i++)
-        {
-            em = particles.transform.GetChild(i).GetComponentInChildren<ParticleSystem>().emission;
-            em.enabled = false;
-        }
-        particlesSystem.Stop();
         Destroy(particles);
-        particlesSystem = null;
         col.enabled = false;
         GameObject thing = Instantiate(dissapearEffect[pickupNum], transform.position, Quaternion.identity);
         Destroy(thing, 1);

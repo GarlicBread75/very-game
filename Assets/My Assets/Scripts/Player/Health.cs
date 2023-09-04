@@ -11,33 +11,30 @@ public class Health : MonoBehaviour
     [SerializeField] float currentHp;
     [SerializeField] GameObject deathEffect;
     [SerializeField] Material deadMaterial;
+    [SerializeField] float hitMatDelay;
+    Color colour;
     [SerializeField] UnityEvent onDeath;
     MeshRenderer rend;
-    float blinkCd;
-    float hitBlinkCd;
-    bool blinking, hitBlinking;
-    [HideInInspector] public bool dead;
-    [HideInInspector] public bool victory;
-    [HideInInspector] public bool hit;
-    BoxCollider col;
+    [HideInInspector] public bool dead, victory, hit;
 
     [Space]
 
     [Header("Health Slider")]
     [SerializeField] Slider hpSlider;
     [SerializeField] Gradient gradient;
-    [SerializeField] Image fill;
-    [SerializeField] Image background;
+    [SerializeField] Image fill, background;
 
     [Space]
 
     [Header("Eyes")]
     [SerializeField] GameObject[] eyes;
-    [SerializeField] float hitBlinkDelay;
-    [SerializeField] float minBlinkTime, maxBlinkTime, minBlinkCooldown, maxBlinkCooldown;
+    [SerializeField] float hitBlinkCooldown ,minBlinkTime, maxBlinkTime, minBlinkCooldown, maxBlinkCooldown;
     [SerializeField] string otherPlayerName;
     [SerializeField] bool menu;
     Health otherPlayer;
+    float blinkCd;
+    float hitBlinkCd;
+    bool blinking, hitBlinking;
 
     [Space]
 
@@ -55,14 +52,14 @@ public class Health : MonoBehaviour
             return;
         }
 
-        col = GetComponent<BoxCollider>();
         rend = GetComponent<MeshRenderer>();
+        colour = rend.material.GetColor("_BaseColor");
         currentHp = maxHp;
         hpSlider.maxValue = maxHp;
         hpSlider.value = currentHp;
 
         otherPlayer = GameObject.Find(otherPlayerName).GetComponent<Health>();
-        hitBlinkCd = hitBlinkDelay;
+        hitBlinkCd = hitBlinkCooldown;
     }
 
     void FixedUpdate()
@@ -102,6 +99,11 @@ public class Health : MonoBehaviour
 
         if (dead)
         {
+            if (rend.material != deadMaterial)
+            {
+                rend.material = deadMaterial;
+            }
+
             foreach (GameObject eye in eyes)
             {
                 if (eye == eyes[1] && !eyes[1].activeInHierarchy)
@@ -163,7 +165,8 @@ public class Health : MonoBehaviour
         if (hit && !dead)
         {
             hit = false;
-            hitBlinkCd = hitBlinkDelay;
+            StartCoroutine(Hit());
+            hitBlinkCd = hitBlinkCooldown;
         }
 
         if (transform.position.x > 50 || transform.position.x < -50 || transform.position.y > 200 || transform.position.y < -15)
@@ -271,6 +274,15 @@ public class Health : MonoBehaviour
         {
             source.Play();
         }
+    }
+
+    IEnumerator Hit()
+    {
+        rend.material.SetColor("_BaseColor", Color.white);
+        rend.material.SetFloat("_ShadowStep", 0);
+        yield return new WaitForSeconds(hitMatDelay);
+        rend.material.SetColor("_BaseColor", colour);
+        rend.material.SetFloat("_ShadowStep", 0.7f);
     }
 
     IEnumerator Blink()

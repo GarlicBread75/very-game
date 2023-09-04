@@ -13,13 +13,12 @@ public class Bullet : MonoBehaviour
 
     [Header("Explosive")]
     [SerializeField] bool explosive;
-    [SerializeField] float explosionDelay, blastRadius;
+    [SerializeField] float explosionDelay, blastRadius, knockbackModifier;
     Rigidbody hitRb;
 
     void OnTriggerEnter(Collider collision)
     {
-
-        if (collision.gameObject.CompareTag(targetTag) || collision.gameObject.CompareTag("Pickup") || collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Block Support"))
+        if (collision.gameObject.CompareTag(targetTag))
         {
             GameObject effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
             Destroy(effect, destroyTimer);
@@ -45,6 +44,18 @@ public class Bullet : MonoBehaviour
             }
             Destroy(gameObject);
         }
+        else
+        if (collision.gameObject.CompareTag("Pickup") || collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Block Support"))
+        {
+            GameObject effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
+            Destroy(effect, destroyTimer);
+            if (explosive)
+            {
+                Invoke("Explode", explosionDelay);
+                return;
+            }
+            Destroy(gameObject);
+        }
     }
 
     void PlaySound(AudioSource source)
@@ -65,26 +76,26 @@ public class Bullet : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, blastRadius);
         foreach (Collider col in colliders)
         {
-            if (col.TryGetComponent(out hitRb))
-            {
-                if (!hitRb.gameObject.CompareTag(notTargetTag) && !hitRb.gameObject.CompareTag(targetTag))
-                {
-                    hitRb.AddExplosionForce(knockback, transform.position, blastRadius, 1, ForceMode.Impulse);
-                }
-                else
-                {
-                    hitRb.velocity = Vector3.zero;
-                }
-            }
-
             if (col.TryGetComponent(out hp))
             {
-                if (!hp.gameObject.CompareTag(notTargetTag))
+                if (hp.gameObject.CompareTag(targetTag))
                 {
                     PlaySound(impactSound);
                     hp.TakeDmg(damage);
                     hp.hit = true;
                 }
+
+                col.GetComponent<Rigidbody>().AddExplosionForce(knockback * knockbackModifier, transform.position, blastRadius, 1, ForceMode.Impulse);
+            }
+            else
+            if (col.gameObject.CompareTag("Pickup"))
+            {
+                col.GetComponent<Rigidbody>().AddExplosionForce(knockback * knockbackModifier, transform.position, blastRadius, 1, ForceMode.Impulse);
+            }
+            else
+            if(col.TryGetComponent(out hitRb))
+            {
+                hitRb.AddExplosionForce(knockback, transform.position, blastRadius, 1, ForceMode.Impulse);
             }
         }
         Destroy(gameObject);

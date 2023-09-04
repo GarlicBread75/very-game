@@ -408,7 +408,7 @@ MonoBehaviour:
   damageModifier: 0
   knockbackModifier: 0
   bulletKnockbackModifier: 0
-  bullet: {fileID: 7758889591140968917, guid: 2fa053c900d7c46429c8138a5c65670d, type: 3}
+  bullet: {fileID: 0}
   damage: 0.25
   minSpeed: 40
   maxSpeed: 50
@@ -491,7 +491,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   gradient2:
     serializedVersion: 2
-    key0: {r: 1, g: 0.39215687, b: 0, a: 1}
+    key0: {r: 1, g: 0, b: 0, a: 1}
     key1: {r: 1, g: 1, b: 0, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}

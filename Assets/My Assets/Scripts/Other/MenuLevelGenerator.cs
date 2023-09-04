@@ -38,7 +38,7 @@ public class MenuLevelGenerator : MonoBehaviour
     {
         for (int x = 0; x < 21; x++)
         {
-            for (int y = 0; y < 12; y++)
+            for (int y = -2; y < 12; y++)
             {
                 if (y <= 3)
                 {
