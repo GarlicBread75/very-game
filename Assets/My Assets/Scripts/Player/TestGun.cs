@@ -8,6 +8,7 @@ public class TestGun : MonoBehaviour
     [Header("Gun")]
     [SerializeField] Transform firePoint;
     [SerializeField] GameObject shootExplosion;
+    [SerializeField] Gun gun;
     [SerializeField] int bulletCount;
     [SerializeField] float spread;
     public float fireRate;

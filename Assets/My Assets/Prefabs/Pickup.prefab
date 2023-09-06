@@ -206,9 +206,9 @@ MonoBehaviour:
   fireRateModifier: 2
   knockbackModifier: 1.25
   bulletKnockbackModifier: 1.5
-  speedModifier: 1.25
-  jumpModifier: 1.25
-  dashPowerModifier: 1.25
+  speedModifier: 2
+  jumpModifier: 1.5
+  dashPowerModifier: 1.5
   healAmount: 5
   particlesOffset: {x: 0, y: -1.5, z: 0}
   maxFallSpeed: -7.5

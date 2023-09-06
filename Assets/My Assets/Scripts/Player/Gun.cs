@@ -13,7 +13,8 @@ public class Gun : MonoBehaviour
     [SerializeField] int bulletCount;
     [SerializeField] float spread;
     public float fireRate;
-    [SerializeField] bool automatic;
+    [SerializeField] bool automatic, rocket;
+    [SerializeField] GameObject disabable;
     public KeyBinding shootKey;
     bool shootPressed, atkPressed, shooting;
     float shootCd;
@@ -69,7 +70,7 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        if (hp.dead)
+        if (hp.playerState == Health.PlayerState.dead)
         {
             return;
         }
@@ -96,7 +97,7 @@ public class Gun : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (hp.dead)
+        if (hp.playerState == Health.PlayerState.dead)
         {
             return;
         }
@@ -108,6 +109,14 @@ public class Gun : MonoBehaviour
         if (shootCd < fireRate / fireRateModifier)
         {
             shootCd += Time.fixedDeltaTime;
+        }
+        else
+        if (disabable != null)
+        {
+            if (!disabable.activeInHierarchy)
+            {
+                disabable.SetActive(true);
+            }
         }
 
         if (atkPressed)
@@ -127,6 +136,10 @@ public class Gun : MonoBehaviour
     void Shoot()
     {
         shooting = true;
+        if (disabable != null)
+        {
+            disabable.SetActive(false);
+        }
         PlaySound(shootSound);
         GameObject effect = Instantiate(shootExplosion, firePoint.position, Quaternion.identity);
         Destroy(effect, 2.1f);

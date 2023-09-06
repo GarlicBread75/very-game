@@ -98,6 +98,10 @@ public class MultipleTargetCamera : MonoBehaviour
     void SmallMovement()
     {
         Vector3 pos = GetCenterPoint() + followOffset;
+        if (pos.y < staticPos.y)
+        {
+            pos.y = staticPos.y;
+        }
         Vector3 desiredPos = Vector3.Lerp(staticPos, new Vector3(pos.x, pos.y, staticPos.z), moveTreshold);
         transform.position = Vector3.Lerp(transform.position, desiredPos, smoothSpeed * Time.deltaTime);
     }

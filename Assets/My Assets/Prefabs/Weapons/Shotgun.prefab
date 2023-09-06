@@ -379,7 +379,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7425554022820952999}
-  m_Layer: 6
+  m_Layer: 12
   m_Name: Fire Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -430,8 +430,8 @@ Transform:
   m_GameObject: {fileID: 5991741150016438973}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.2, y: 1.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7919986494101898100}
@@ -452,21 +452,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: {fileID: 0}
   firePoint: {fileID: 7425554022820952999}
-  shootExplosion: {fileID: 417761080263594737, guid: cfdadc131e55c0b4d8cca341ab3ebd21,
+  shootExplosion: {fileID: 417761080263594737, guid: ed8829f8979ed0f4fa7b2cba4e7ffb4a,
     type: 3}
   bulletCount: 10
-  spread: 0.25
-  fireRate: 1
+  spread: 0.3
+  fireRate: 1.5
   automatic: 1
+  rocket: 0
+  disabable: {fileID: 0}
   shootKey: {fileID: 0}
   fireRateModifier: 0
   damageModifier: 0
   knockbackModifier: 0
   bulletKnockbackModifier: 0
   bullet: {fileID: 0}
-  damage: 0.25
-  minSpeed: 25
-  maxSpeed: 40
+  damage: 0.5
+  minSpeed: 30
+  maxSpeed: 50
   timeToDestroy: 5
   muzzleFlash: {fileID: 7006587457389541909}
   muzzleGradient:
@@ -504,15 +506,15 @@ MonoBehaviour:
   - {fileID: 5827178562455513269}
   - {fileID: 8376180092604273788}
   muzzleLight: {fileID: 1751228079364563903}
-  minMuzzleScale: 0.25
-  maxMuzzleScale: 0.5
+  minMuzzleScale: 0.15
+  maxMuzzleScale: 0.3
   minMuzzleFlashSpeed: 15
-  maxMuzzleFlashSpeed: 25
-  minMuzzleLifetime: 0.075
-  maxMuzzleLifetime: 0.1
+  maxMuzzleFlashSpeed: 20
+  minMuzzleLifetime: 0.1
+  maxMuzzleLifetime: 0.2
   player: {fileID: 0}
-  knockback: 5
-  bulletKnockback: 0.75
+  knockback: 10
+  bulletKnockback: 1
   slider: {fileID: 0}
   gradient1:
     serializedVersion: 2
@@ -608,7 +610,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   shootSound: {fileID: 3152859795904511369}
   bulletImpactSound: {fileID: 7498011667184470423}
-  minVolume: 0.75
+  minVolume: 0.8
   maxVolume: 1
   minPitch: 0.75
   maxPitch: 1.25
@@ -896,7 +898,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 293956891000254746}
-  m_Layer: 6
+  m_Layer: 12
   m_Name: Muzzle Flash Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1163,6 +1165,21 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4576647855362303044, guid: 39543ad7a23299e4db2d08429ce3b393,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5572818774557942282, guid: 39543ad7a23299e4db2d08429ce3b393,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866186722400822132, guid: 39543ad7a23299e4db2d08429ce3b393,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 5990755242921019408, guid: 39543ad7a23299e4db2d08429ce3b393,
         type: 3}
       propertyPath: m_Name
@@ -1170,8 +1187,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5990755242921019408, guid: 39543ad7a23299e4db2d08429ce3b393,
         type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5990755242921019408, guid: 39543ad7a23299e4db2d08429ce3b393,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666099021826859381, guid: 39543ad7a23299e4db2d08429ce3b393,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

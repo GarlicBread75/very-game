@@ -150,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTag: 
   notTargetTag: 
-  hitEffect: {fileID: 5373101299431178242, guid: 5cbeb9db413018a41b3a11553a39f238,
+  hitEffect: {fileID: 5373101299431178242, guid: 2d305d2667b65304ab202e9de51a6d82,
     type: 3}
   impactSound: {fileID: 0}
   destroyTimer: 0.5

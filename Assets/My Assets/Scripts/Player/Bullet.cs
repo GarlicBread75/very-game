@@ -32,9 +32,11 @@ public class Bullet : MonoBehaviour
             {
                 if (collision.TryGetComponent(out hp))
                 {
-                    PlaySound(impactSound);
-                    hp.TakeDmg(damage);
-                    hp.hit = true;
+                    if (hp.playerState != Health.PlayerState.dead)
+                    {
+                        PlaySound(impactSound);
+                        hp.TakeDmg(damage);
+                    }
                 }
 
                 if (collision.TryGetComponent(out hitRb))
@@ -78,11 +80,10 @@ public class Bullet : MonoBehaviour
         {
             if (col.TryGetComponent(out hp))
             {
-                if (hp.gameObject.CompareTag(targetTag))
+                if (hp.gameObject.CompareTag(targetTag) && hp.playerState != Health.PlayerState.dead)
                 {
                     PlaySound(impactSound);
                     hp.TakeDmg(damage);
-                    hp.hit = true;
                 }
 
                 col.GetComponent<Rigidbody>().AddExplosionForce(knockback * knockbackModifier, transform.position, blastRadius, 1, ForceMode.Impulse);

@@ -91,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!menu)
         {
-            if (hp.dead)
+            if (hp.playerState == Health.PlayerState.dead)
             {
                 return;
             }
@@ -117,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!menu)
         {
-            if (hp.dead)
+            if (hp.playerState == Health.PlayerState.dead)
             {
                 return;
             }

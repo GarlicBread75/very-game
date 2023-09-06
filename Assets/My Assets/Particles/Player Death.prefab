@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 417761079494231309}
   - component: {fileID: 417761079494231311}
   - component: {fileID: 417761079494231310}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: FX_Explosion_Rubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4768,7 +4768,7 @@ GameObject:
   - component: {fileID: 417761080263594748}
   - component: {fileID: 417761080263594739}
   - component: {fileID: 417761080263594738}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Player Death
   m_TagString: Untagged
   m_Icon: {fileID: 0}

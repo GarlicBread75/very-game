@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 58f057f681c4f02458cd65778ef036b0, type: 2}
+  - {fileID: 2100000, guid: c3563d75709a88e4bb09f838e8949f1c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -227,7 +227,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c3563d75709a88e4bb09f838e8949f1c, type: 2}
+  - {fileID: 2100000, guid: 6d91ce34d70dfef44817029608a2b5c0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -393,7 +393,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6d91ce34d70dfef44817029608a2b5c0, type: 2}
+  - {fileID: 2100000, guid: c3563d75709a88e4bb09f838e8949f1c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -476,7 +476,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c3563d75709a88e4bb09f838e8949f1c, type: 2}
+  - {fileID: 2100000, guid: 58f057f681c4f02458cd65778ef036b0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -682,7 +682,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4031552709023190432
 Transform:
   m_ObjectHideFlags: 0
@@ -693,8 +693,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.85, y: 0.85, z: 0.85}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6377818354957109257}
   - {fileID: 5343949602305952018}
@@ -714,12 +714,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: {fileID: 0}
   firePoint: {fileID: 5343949602305952018}
-  shootExplosion: {fileID: 417761080263594737, guid: cfdadc131e55c0b4d8cca341ab3ebd21,
+  shootExplosion: {fileID: 417761080263594737, guid: ed8829f8979ed0f4fa7b2cba4e7ffb4a,
     type: 3}
   bulletCount: 1
   spread: 0
   fireRate: 5
-  automatic: 0
+  automatic: 1
+  rocket: 0
+  disabable: {fileID: 7171936962390362301}
   shootKey: {fileID: 0}
   fireRateModifier: 0
   damageModifier: 0
@@ -727,8 +729,8 @@ MonoBehaviour:
   bulletKnockbackModifier: 0
   bullet: {fileID: 0}
   damage: 2.5
-  minSpeed: 62.5
-  maxSpeed: 62.5
+  minSpeed: 65
+  maxSpeed: 65
   timeToDestroy: 5
   muzzleFlash: {fileID: 8554547124628123795}
   muzzleGradient:
@@ -768,13 +770,13 @@ MonoBehaviour:
   muzzleLight: {fileID: 1529870241295477459}
   minMuzzleScale: 0.25
   maxMuzzleScale: 0.5
-  minMuzzleFlashSpeed: 15
+  minMuzzleFlashSpeed: 10
   maxMuzzleFlashSpeed: 25
-  minMuzzleLifetime: 0.075
-  maxMuzzleLifetime: 0.1
+  minMuzzleLifetime: 0.1
+  maxMuzzleLifetime: 0.25
   player: {fileID: 0}
-  knockback: 0
-  bulletKnockback: 100
+  knockback: 25
+  bulletKnockback: 125
   slider: {fileID: 0}
   gradient1:
     serializedVersion: 2
@@ -1075,7 +1077,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5343949602305952018}
-  m_Layer: 6
+  m_Layer: 12
   m_Name: Fire Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1316,7 +1318,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4020936283362271756}
-  m_Layer: 6
+  m_Layer: 12
   m_Name: Muzzle Flash Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1400,7 +1402,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 58f057f681c4f02458cd65778ef036b0, type: 2}
+  - {fileID: 2100000, guid: 6d91ce34d70dfef44817029608a2b5c0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1500,6 +1502,21 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4576647855362303044, guid: 39543ad7a23299e4db2d08429ce3b393,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5572818774557942282, guid: 39543ad7a23299e4db2d08429ce3b393,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866186722400822132, guid: 39543ad7a23299e4db2d08429ce3b393,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 5990755242921019408, guid: 39543ad7a23299e4db2d08429ce3b393,
         type: 3}
       propertyPath: m_Name
@@ -1507,8 +1524,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5990755242921019408, guid: 39543ad7a23299e4db2d08429ce3b393,
         type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5990755242921019408, guid: 39543ad7a23299e4db2d08429ce3b393,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666099021826859381, guid: 39543ad7a23299e4db2d08429ce3b393,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

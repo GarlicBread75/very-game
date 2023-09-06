@@ -107,7 +107,7 @@ public class Pickup : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player 1"))
         {
-            if (hp1.dead)
+            if (hp1.playerState == Health.PlayerState.dead)
             {
                 return;
             }
@@ -130,7 +130,7 @@ public class Pickup : MonoBehaviour
         else
         if (collision.gameObject.CompareTag("Player 2"))
         {
-            if (hp2.dead)
+            if (hp2.playerState == Health.PlayerState.dead)
             {
                 return;
             }

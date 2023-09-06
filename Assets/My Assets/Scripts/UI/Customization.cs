@@ -38,6 +38,12 @@ public class Customization : MonoBehaviour
     void FixedUpdate()
     {
         SetColour();
+        SaveData();
+    }
+
+    void SetColour()
+    {
+        mat.SetColor("_BaseColor", Color.HSVToRGB(hue.value, saturation.value, value.value));
 
         colourKeys[1].color = mat.GetColor("_BaseColor");
         gradient.SetKeys(colourKeys, alphaKeys);
@@ -54,12 +60,6 @@ public class Customization : MonoBehaviour
             deadMat.SetColor("_BaseColor", gradient.Evaluate(0.5f));
             bullet.SetColor("_OutlineColor", gradient.Evaluate(1));
         }
-        SaveData();
-    }
-
-    void SetColour()
-    {
-        mat.SetColor("_BaseColor", Color.HSVToRGB(hue.value, saturation.value, value.value));
     }
 
     public void SaveData()

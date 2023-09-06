@@ -15,7 +15,9 @@ public class Health : MonoBehaviour
     Color colour;
     [SerializeField] UnityEvent onDeath;
     MeshRenderer rend;
-    [HideInInspector] public bool dead, victory, hit;
+    bool hit;
+    public enum PlayerState { alive, dead, victory };
+    [HideInInspector] public PlayerState playerState = PlayerState.alive;
 
     [Space]
 
@@ -78,7 +80,7 @@ public class Health : MonoBehaviour
             return;
         }
 
-        if (currentHp <= 0 && !dead)
+        if (currentHp <= 0 && playerState != PlayerState.dead)
         {
             Die();
         }
@@ -97,7 +99,7 @@ public class Health : MonoBehaviour
             otherPlayer = GameObject.Find(otherPlayerName).GetComponent<Health>();
         }
 
-        if (dead)
+        if (playerState == PlayerState.dead)
         {
             if (rend.material != deadMaterial)
             {
@@ -119,7 +121,7 @@ public class Health : MonoBehaviour
             return;
         }
         else
-        if (otherPlayer.dead)
+        if (otherPlayer.playerState == PlayerState.dead)
         {
             foreach (GameObject eye in eyes)
             {
@@ -162,7 +164,7 @@ public class Health : MonoBehaviour
             }
         }
 
-        if (hit && !dead)
+        if (hit)
         {
             hit = false;
             StartCoroutine(Hit());
@@ -180,6 +182,7 @@ public class Health : MonoBehaviour
     public void TakeDmg(float dmg)
     {
         currentHp -= dmg;
+        hit = true;
     }
 
     public void Heal(float heal)
@@ -197,6 +200,7 @@ public class Health : MonoBehaviour
     {
         maxHp -= decrease;
         currentHp -= decrease;
+        hit = true;
     }
 
     #endregion
@@ -225,7 +229,7 @@ public class Health : MonoBehaviour
         }
         rend.material = deadMaterial;
         onDeath.Invoke();
-        dead = true;
+        playerState = PlayerState.dead;
     }
 
     void HitBlinkOn()
@@ -256,11 +260,6 @@ public class Health : MonoBehaviour
         hitBlinking = false;
     }
 
-    public void Victory()
-    {
-        victory = true;
-    }
-
     public void ToggleAngry(bool thingy)
     {
         eyes[4].SetActive(thingy);
@@ -280,7 +279,7 @@ public class Health : MonoBehaviour
     {
         rend.material.SetColor("_BaseColor", Color.white);
         rend.material.SetFloat("_ShadowStep", 0);
-        yield return new WaitForSeconds(hitMatDelay);
+        yield return new WaitForSeconds(hitBlinkCooldown / 2);
         rend.material.SetColor("_BaseColor", colour);
         rend.material.SetFloat("_ShadowStep", 0.7f);
     }

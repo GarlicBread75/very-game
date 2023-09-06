@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5417618808148816814}
   - component: {fileID: 3780153671798970600}
   - component: {fileID: 3573171874390328188}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Dash Dust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
