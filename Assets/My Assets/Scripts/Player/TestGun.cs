@@ -8,7 +8,6 @@ public class TestGun : MonoBehaviour
     [Header("Gun")]
     [SerializeField] Transform firePoint;
     [SerializeField] GameObject shootExplosion;
-    [SerializeField] Gun gun;
     [SerializeField] int bulletCount;
     [SerializeField] float spread;
     public float fireRate;
@@ -19,7 +18,7 @@ public class TestGun : MonoBehaviour
 
     [Header("Bullet")]
     [SerializeField] GameObject bullet;
-    [SerializeField] float minSpeed, maxSpeed, timeToDestroy;
+    [SerializeField] float damage, minSpeed, maxSpeed, timeToDestroy;
 
     [Space]
 
@@ -30,6 +29,12 @@ public class TestGun : MonoBehaviour
     [SerializeField] Light muzzleLight;
     [SerializeField] float minMuzzleScale, maxMuzzleScale, minMuzzleFlashSpeed, maxMuzzleFlashSpeed, minMuzzleLifetime, maxMuzzleLifetime;
     float num, amplitude, multiplier, sin;
+
+    [Space]
+
+    [Header("Knockback")]
+    public Rigidbody player;
+    [SerializeField] float knockback, bulletKnockback;
     #endregion
 
     void FixedUpdate()

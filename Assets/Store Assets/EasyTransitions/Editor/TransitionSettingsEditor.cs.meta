@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: c60f4a1703f193542b97665edbd207a5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - transitionManagerSettingsLogo: {fileID: 2800000, guid: 35869fd26108add4d8b2fe1a0a6b8009,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

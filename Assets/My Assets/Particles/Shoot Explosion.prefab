@@ -1020,7 +1020,7 @@ ParticleSystem:
     curve:
       serializedVersion: 2
       minMaxState: 2
-      scalar: 6.9192276
+      scalar: 7
       minScalar: 1
       maxCurve:
         serializedVersion: 2

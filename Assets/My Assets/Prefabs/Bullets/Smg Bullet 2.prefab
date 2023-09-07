@@ -148,8 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85b6a160e7ed65d459ff8d9990832a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTag: 
-  notTargetTag: 
+  targetTag: a
+  notTargetTag: a
   hitEffect: {fileID: 5373101299431178242, guid: 2d305d2667b65304ab202e9de51a6d82,
     type: 3}
   impactSound: {fileID: 0}
@@ -162,3 +162,7 @@ MonoBehaviour:
   explosionDelay: 0
   blastRadius: 0
   knockbackModifier: 0
+  upwardsModifier:
+  - 1
+  - 1
+  - 1

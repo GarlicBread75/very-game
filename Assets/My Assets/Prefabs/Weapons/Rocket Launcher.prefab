@@ -718,7 +718,7 @@ MonoBehaviour:
     type: 3}
   bulletCount: 1
   spread: 0
-  fireRate: 5
+  fireRate: 7.5
   automatic: 1
   rocket: 0
   disabable: {fileID: 7171936962390362301}
@@ -727,8 +727,8 @@ MonoBehaviour:
   damageModifier: 0
   knockbackModifier: 0
   bulletKnockbackModifier: 0
-  bullet: {fileID: 0}
-  damage: 2.5
+  bullet: {fileID: 642116519630015918, guid: e9f958bbedebcc943917abc164a7758c, type: 3}
+  damage: 5
   minSpeed: 65
   maxSpeed: 65
   timeToDestroy: 5
@@ -775,7 +775,7 @@ MonoBehaviour:
   minMuzzleLifetime: 0.1
   maxMuzzleLifetime: 0.25
   player: {fileID: 0}
-  knockback: 25
+  knockback: 20
   bulletKnockback: 125
   slider: {fileID: 0}
   gradient1:

@@ -662,7 +662,7 @@ MonoBehaviour:
   damageModifier: 0
   knockbackModifier: 0
   bulletKnockbackModifier: 0
-  bullet: {fileID: 0}
+  bullet: {fileID: 8277969018896164436, guid: 1400e30757c0a0443b2457d56f9460d2, type: 3}
   damage: 0.25
   minSpeed: 50
   maxSpeed: 50

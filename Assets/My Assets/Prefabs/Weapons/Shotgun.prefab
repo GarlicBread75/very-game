@@ -432,7 +432,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.2, y: 1.1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7919986494101898100}
   - {fileID: 7425554022820952999}
@@ -465,7 +465,7 @@ MonoBehaviour:
   damageModifier: 0
   knockbackModifier: 0
   bulletKnockbackModifier: 0
-  bullet: {fileID: 0}
+  bullet: {fileID: 8277969018896164436, guid: 3c52b474b7c8bca459c8843cd84dafc1, type: 3}
   damage: 0.5
   minSpeed: 30
   maxSpeed: 50

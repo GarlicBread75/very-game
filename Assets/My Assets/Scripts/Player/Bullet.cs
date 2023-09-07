@@ -14,10 +14,16 @@ public class Bullet : MonoBehaviour
     [Header("Explosive")]
     [SerializeField] bool explosive;
     [SerializeField] float explosionDelay, blastRadius, knockbackModifier;
+    [SerializeField] float[] upwardsModifier;
     Rigidbody hitRb;
 
     void OnTriggerEnter(Collider collision)
     {
+        if (targetTag == "a")
+        {
+            return;
+        }
+        else
         if (collision.gameObject.CompareTag(targetTag))
         {
             GameObject effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
@@ -86,17 +92,17 @@ public class Bullet : MonoBehaviour
                     hp.TakeDmg(damage);
                 }
 
-                col.GetComponent<Rigidbody>().AddExplosionForce(knockback * knockbackModifier, transform.position, blastRadius, 1, ForceMode.Impulse);
+                col.GetComponent<Rigidbody>().AddExplosionForce(knockback * knockbackModifier, transform.position, blastRadius, upwardsModifier[0], ForceMode.Impulse);
             }
             else
             if (col.gameObject.CompareTag("Pickup"))
             {
-                col.GetComponent<Rigidbody>().AddExplosionForce(knockback * knockbackModifier, transform.position, blastRadius, 1, ForceMode.Impulse);
+                col.GetComponent<Rigidbody>().AddExplosionForce(knockback * knockbackModifier, transform.position, blastRadius, upwardsModifier[1], ForceMode.Impulse);
             }
             else
             if(col.TryGetComponent(out hitRb))
             {
-                hitRb.AddExplosionForce(knockback, transform.position, blastRadius, 1, ForceMode.Impulse);
+                hitRb.AddExplosionForce(knockback, transform.position, blastRadius, upwardsModifier[2], ForceMode.Impulse);
             }
         }
         Destroy(gameObject);

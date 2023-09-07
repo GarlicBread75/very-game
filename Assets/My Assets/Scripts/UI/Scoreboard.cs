@@ -10,15 +10,9 @@ public class Scoreboard : MonoBehaviour
     [SerializeField] ScoreManager scoreManager;
     [SerializeField] Material p1, p2, p1Font, p2Font;
     [SerializeField] Color c;
+    [SerializeField] float sceneLoadDelay;
     int p1Score, p2Score;
     [HideInInspector] public bool alreadyScored;
-
-    [Space]
-
-    [Header("Scene Load")]
-    [SerializeField] float sceneLoadDelay;
-    [SerializeField] Animator anim;
-    bool changeScene;
 
     void Awake()
     {
@@ -32,11 +26,6 @@ public class Scoreboard : MonoBehaviour
     {
         p1ScoreText.text = p1Score.ToString();
         p2ScoreText.text = p2Score.ToString();
-
-        if (changeScene)
-        {
-            SceneManager.LoadScene("Level");
-        }
     }
 
     public void IncreaseScore(int playerNum)
@@ -63,17 +52,12 @@ public class Scoreboard : MonoBehaviour
         }
         victoryText.text = $"Player {playerNum} wins!";
         victoryText.gameObject.SetActive(true);
-        Invoke("ChangeScene", sceneLoadDelay);
+        Invoke("RoundOver", sceneLoadDelay);
     }
 
-    void ChangeScene()
+    void RoundOver()
     {
-        anim.SetBool("Round Over", true);
-    }
-
-    public void CanChangeScene()
-    {
-        changeScene = true;
+        SceneManager.LoadScene("Level");
     }
 
     public void AlreadyScored()

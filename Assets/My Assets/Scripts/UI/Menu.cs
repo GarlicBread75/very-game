@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Menu : MonoBehaviour
+public class MenuFunctions : MonoBehaviour
 {
     [SerializeField] GameObject[] menus;
     [SerializeField] Animator anim;
@@ -19,17 +19,12 @@ public class Menu : MonoBehaviour
         }
     }
 
-    public void Transition()
-    {
-        anim.SetBool("Round Over", true);
-    }
-
-    public void LoadLevel()
+    public void Play()
     {
         SceneManager.LoadScene("Level");
     }
 
-    public void LoadMenu()
+    public void Menu()
     {
         SceneManager.LoadScene("Menu");
     }
