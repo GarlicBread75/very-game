@@ -201,12 +201,14 @@ MonoBehaviour:
   - {fileID: 4535006216103734310, guid: 26469dbaf74636840b8fcf424438f032, type: 3}
   - {fileID: 2965222256817593503, guid: 03471fba6b78e554e92b3cde600c7993, type: 3}
   - {fileID: 6823302871133167919, guid: 6cbd0aed578e1ab44bd99b7288388f7c, type: 3}
-  duration: 7.5
+  col: {fileID: 1826519139888521681}
+  trigger: {fileID: 3611023828399373759}
+  duration: 7
   damageModifier: 1.5
   fireRateModifier: 2
   knockbackModifier: 1.25
   bulletKnockbackModifier: 1.5
-  speedModifier: 2
+  speedModifier: 1.5
   jumpModifier: 1.5
   dashPowerModifier: 1.5
   healAmount: 5

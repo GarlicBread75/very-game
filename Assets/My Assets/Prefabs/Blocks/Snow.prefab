@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7926995618859580304}
   - component: {fileID: 3148870345871923093}
   - component: {fileID: 3859089625603342608}
-  - component: {fileID: 7869561070254851490}
+  - component: {fileID: 7731845100665944719}
   - component: {fileID: 623105366158530135}
   m_Layer: 6
   m_Name: Snow
@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 225076401862046998}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 1.5, z: 0}
-  m_LocalScale: {x: 1.9949999, y: 1.9949999, z: 1.9949999}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.99, y: 0.99, z: 0.99}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 225076401862046998}
-  m_Mesh: {fileID: -2432090755550338912, guid: d9d08e3474e0965459f8e2dbd77c4fdd, type: 3}
+  m_Mesh: {fileID: -2432090755550338912, guid: d6e812f65564d6242838b1e35ee6e3c4, type: 3}
 --- !u!23 &3859089625603342608
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -85,7 +85,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7869561070254851490
+--- !u!65 &7731845100665944719
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -104,7 +104,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &623105366158530135
 Rigidbody:

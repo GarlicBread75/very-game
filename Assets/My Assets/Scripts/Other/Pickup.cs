@@ -9,6 +9,7 @@ public class Pickup : MonoBehaviour
     [SerializeField] Material[] outlineColours;
     [SerializeField] GameObject[] effect;
     [SerializeField] GameObject[] dissapearEffect;
+    [SerializeField] CapsuleCollider col, trigger;
 
     [Space]
 
@@ -32,7 +33,6 @@ public class Pickup : MonoBehaviour
     [SerializeField] float minVolume, maxVolume, minPitch, maxPitch;
     GameObject particles, angry1, angry2;
     PickupSpawner spawner;
-    CapsuleCollider col;
     MeshRenderer rend, o1, o2;
     Gun gun1, gun2;
     int pickupNum;
@@ -230,6 +230,7 @@ public class Pickup : MonoBehaviour
         rend.enabled = false;
         Destroy(particles);
         col.enabled = false;
+        trigger.enabled = false;
         GameObject thing = Instantiate(dissapearEffect[pickupNum], transform.position, Quaternion.identity);
         Destroy(thing, 1);
         yield return new WaitForSeconds(duration);
@@ -329,6 +330,7 @@ public class Pickup : MonoBehaviour
         rend.enabled = false;
         Destroy(particles);
         col.enabled = false;
+        trigger.enabled = false;
         GameObject thing = Instantiate(dissapearEffect[pickupNum], transform.position, Quaternion.identity);
         Destroy(thing, 1);
         yield return new WaitForSeconds(duration);
@@ -362,6 +364,7 @@ public class Pickup : MonoBehaviour
         rend.enabled = false;
         Destroy(particles);
         col.enabled = false;
+        trigger.enabled = false;
         GameObject thing = Instantiate(dissapearEffect[pickupNum], transform.position, Quaternion.identity);
         Destroy(thing, 1);
         yield return new WaitForSeconds(duration);
